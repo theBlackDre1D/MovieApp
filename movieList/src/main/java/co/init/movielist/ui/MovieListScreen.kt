@@ -1,37 +1,60 @@
 package co.init.movielist.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
+import co.init.movielist.ui.components.ErrorItem
 import co.init.movielist.ui.components.MovieListItem
-
 
 @Composable
 fun MovieListScreen(viewModel: MovieListVM) {
-    val state = viewModel.movies.collectAsStateWithLifecycle()
+    val movies = viewModel.popularMovies.collectAsLazyPagingItems()
 
     Column {
-        if (state.value.loading) { // TODO later add loading to list
-            CircularProgressIndicator()
-        }
-
-        Text(viewModel.text)
-
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+            contentPadding = PaddingValues(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(state.value.movies) { movie ->
-                MovieListItem(movie)
+            items(
+                count = movies.itemCount,
+                key = movies.itemKey { it.id },
+                contentType = movies.itemContentType()
+            ) { index ->
+                val movie = movies[index]
+                movie?.let {
+                    MovieListItem(it)
+                }
+            }
+
+            movies.apply {
+                when (loadState.append) {
+                    is LoadState.Loading -> {
+                        item {
+                            // TODO better progress
+                            CircularProgressIndicator()
+                        }
+                    }
+
+                    is LoadState.Error -> {
+                        // TODO do it better
+                        val error = movies.loadState.append as LoadState.Error
+                        item {
+                            ErrorItem(
+                                message = error.error.localizedMessage ?: "An error occurred",
+                                onRetry = { movies.retry() }
+                            )
+                        }
+                    }
+                    else -> {}
+                }
             }
         }
     }

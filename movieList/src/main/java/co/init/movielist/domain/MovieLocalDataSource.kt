@@ -10,14 +10,20 @@ class MovieLocalDataSource @Inject constructor(
     private val movieDao: MovieDao
 ) {
 
-    suspend fun getAllMovies() = flow {
+    suspend fun getAllFavoriteMovies() = flow {
         emit(Result.success(movieDao.getAllMovies()))
     }.catch {
         emit(Result.failure(it))
     }
 
-    suspend fun saveMovies(movies: List<MovieEntity>) = flow {
-        emit(Result.success(movieDao.saveMovies(movies)))
+    suspend fun addToFavorites(movieEntity: MovieEntity)  = flow {
+        emit(Result.success(movieDao.saveMovie(movieEntity)))
+    }.catch {
+        emit(Result.failure(it))
+    }
+
+    suspend fun removeFromFavorites(movieEntity: MovieEntity)  = flow {
+        emit(Result.success(movieDao.deleteMovie(movieEntity)))
     }.catch {
         emit(Result.failure(it))
     }

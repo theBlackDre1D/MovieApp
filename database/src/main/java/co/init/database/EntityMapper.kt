@@ -4,7 +4,7 @@ import co.init.core.data.Movie
 
 object EntityMapper {
 
-    fun fromMovie(movie: Movie): MovieEntity {
+    fun toMovieEntity(movie: Movie): MovieEntity {
         return MovieEntity(
             id = movie.id,
             adult = movie.adult,
@@ -18,20 +18,21 @@ object EntityMapper {
             title = movie.title,
             video = movie.video,
             voteAverage = movie.voteAverage,
-            voteCount = movie.voteCount
+            voteCount = movie.voteCount,
+            isFavorite = movie.isFavorite
         )
     }
 
-    fun fromMovies(movies: List<Movie>): List<MovieEntity> {
+    fun toMovieEntities(movies: List<Movie>): List<MovieEntity> {
         val entities = mutableListOf<MovieEntity>()
         movies.forEach { movie ->
-            entities.add(fromMovie(movie))
+            entities.add(toMovieEntity(movie))
         }
 
         return entities
     }
 
-    fun fromMovieEntity(movieEntity: MovieEntity): Movie {
+    fun toMovie(movieEntity: MovieEntity): Movie {
         return Movie(
             id = movieEntity.id!!,
             adult = movieEntity.adult,
@@ -45,14 +46,15 @@ object EntityMapper {
             title = movieEntity.title,
             video = movieEntity.video,
             voteAverage = movieEntity.voteAverage,
-            voteCount = movieEntity.voteCount
+            voteCount = movieEntity.voteCount,
+            isFavorite = movieEntity.isFavorite
         )
     }
 
-    fun fromMovieEntities(movies: List<MovieEntity>): List<Movie> {
+    fun toMovies(movies: List<MovieEntity>): List<Movie> {
         val entities = mutableListOf<Movie>()
         movies.forEach { movie ->
-            entities.add(fromMovieEntity(movie))
+            entities.add(toMovie(movie))
         }
 
         return entities
