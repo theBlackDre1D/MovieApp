@@ -11,7 +11,7 @@ class MovieLocalDataSource @Inject constructor(
 ) {
 
     suspend fun getAllMovies() = flow {
-        emit(Result.success(movieDao.getAllMovies()   ))
+        emit(Result.success(movieDao.getAllMovies()))
     }.catch {
         emit(Result.failure(it))
     }
