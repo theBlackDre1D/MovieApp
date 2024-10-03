@@ -47,4 +47,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+    implementation (libs.ui)
+    implementation(libs.androidx.material3)
+
+    // Coil
+    implementation(libs.coil.compose)
 }

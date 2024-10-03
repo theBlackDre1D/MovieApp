@@ -14,12 +14,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-private const val CONNECTION_TIMEOUT_SECONDS = 30L
-private const val BASE_URL = "https://api.themoviedb.org/3/"
-
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModules {
+
+    private const val CONNECTION_TIMEOUT_SECONDS = 30L
+    const val BASE_URL = "https://api.themoviedb.org/3/"
 
     @Provides
     fun provideGson(): Gson = Gson()
