@@ -1,14 +1,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
 
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
 }
 
 android {
-    namespace = "co.init.movielist"
+    namespace = "co.init.database"
     compileSdk = 34
 
     defaultConfig {
@@ -34,16 +33,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
 
     implementation(project(":core"))
-    implementation(project(":network"))
-    implementation(project(":database"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -52,23 +46,13 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // Compose
-    implementation(platform(libs.androidx.compose.bom))
-    implementation (libs.androidx.lifecycle.viewmodel.compose)
-    implementation (libs.ui)
-    implementation(libs.androidx.material3)
-
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
 
     // Room
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.paging)
-
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
 }

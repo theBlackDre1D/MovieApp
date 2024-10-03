@@ -46,9 +46,7 @@ class MovieListVM @Inject constructor(
 
                 result.fold(
                     onSuccess = { success ->
-                        _movies.update {
-                            it.copy(movies = it.movies + success.results)
-                        }
+                        _movies.update { it.copy(movies = it.movies + success.results) }
                     },
                     onFailure = {
                         // TODO

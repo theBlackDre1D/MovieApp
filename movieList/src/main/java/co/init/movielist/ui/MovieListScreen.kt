@@ -30,7 +30,7 @@ fun MovieListScreen(viewModel: MovieListVM) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            items(state.value.movies) {movie ->
+            items(state.value.movies) { movie ->
                 MovieListItem(movie)
             }
         }
