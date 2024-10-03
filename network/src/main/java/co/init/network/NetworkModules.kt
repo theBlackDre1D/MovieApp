@@ -1,5 +1,6 @@
 package co.init.network
 
+import co.init.network.interceptors.ApiKeyInterceptor
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -37,15 +38,23 @@ object NetworkModules {
     }
 
     @Provides
-    fun provideMasOkHttpClient(): OkHttpClient =
+    fun provideMasOkHttpClient(
+        apiKeyInterceptor: ApiKeyInterceptor
+    ): OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .addInterceptor(HttpLoggingInterceptor().apply {
                 this.setLevel(HttpLoggingInterceptor.Level.BODY)
             })
+            .addInterceptor(apiKeyInterceptor)
             .protocols(listOf(Protocol.HTTP_1_1))
             .retryOnConnectionFailure(true)
             .build()
+
+    @Provides
+    fun provideAPiKeyInterceptor(): ApiKeyInterceptor {
+        return ApiKeyInterceptor()
+    }
 
     @Provides
     fun provideMovieService(retrofit: Retrofit): MovieService =

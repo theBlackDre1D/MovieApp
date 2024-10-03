@@ -42,4 +42,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.converter.gson)
+
+    implementation(libs.coroutines)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 }

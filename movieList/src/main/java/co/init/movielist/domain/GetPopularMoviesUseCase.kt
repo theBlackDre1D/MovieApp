@@ -2,9 +2,9 @@ package co.init.movielist.domain
 
 import javax.inject.Inject
 
-class GetPopularMoviesUseCase @Inject constructor() {
+class GetPopularMoviesUseCase @Inject constructor(
+    private val repository: MovieRepository
+) {
 
-    suspend operator fun invoke() {
-        // TODO
-    }
+    suspend operator fun invoke() = repository.getPopularMovies()
 }
