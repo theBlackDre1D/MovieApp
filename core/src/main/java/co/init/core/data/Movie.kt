@@ -3,6 +3,7 @@ package co.init.core.data
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@kotlinx.serialization.Serializable
 data class Movie(
     @SerializedName("id") val id: Int,
     @SerializedName("adult") val adult: Boolean,
