@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
@@ -19,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
+import co.init.core.data.Constants
 import co.init.core.data.Movie
 import co.init.movielist.R
 import co.init.movielist.ui.components.ErrorItem
@@ -32,7 +34,9 @@ fun MovieListScreen(
     val remoteMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val fetchingMoviesState by remember { derivedStateOf { remoteMovies.loadState.refresh } }
 
-    Column {
+    Column(
+        modifier = Modifier.padding(bottom = Constants.BOTTOM_NAVIGATION_HEIGHT.dp)
+    ) {
         LazyColumn(
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)

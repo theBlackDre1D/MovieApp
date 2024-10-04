@@ -1,6 +1,5 @@
 package co.init.network
 
-import co.init.core.data.Constants
 import co.init.network.interceptors.ApiKeyInterceptor
 import com.google.gson.Gson
 import dagger.Module
@@ -20,6 +19,7 @@ import javax.inject.Singleton
 object NetworkModules {
 
     private const val CONNECTION_TIMEOUT_SECONDS = 30L
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     @Provides
     fun provideGson(): Gson = Gson()
@@ -31,7 +31,7 @@ object NetworkModules {
         gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()

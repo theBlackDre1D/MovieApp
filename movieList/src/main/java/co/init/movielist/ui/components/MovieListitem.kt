@@ -33,6 +33,7 @@ fun MovieListItem(
 
     Column(
         modifier = Modifier
+            .fillMaxWidth()
             .wrapContentHeight()
             .clickable { onMovieClick(movie) },
         horizontalAlignment = Alignment.CenterHorizontally
@@ -46,12 +47,12 @@ fun MovieListItem(
 
             // Icon
             AsyncImage(
-                model = movie.imageUrl,
+                model = movie.thumbnailUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .size(80.dp)
                     .padding(16.dp),
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 error = painterResource(id = R.drawable.ic_error),
                 placeholder = painterResource(id = R.drawable.ic_photo_placeholder)
             )

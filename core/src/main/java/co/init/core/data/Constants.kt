@@ -1,5 +1,5 @@
 package co.init.core.data
 
 object Constants {
-    const val BASE_URL = "https://api.themoviedb.org/3/"
+    const val BOTTOM_NAVIGATION_HEIGHT = 80
 }

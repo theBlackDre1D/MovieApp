@@ -1,6 +1,5 @@
 package co.init.core.data
 
-import co.init.core.BuildConfig
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -22,6 +21,9 @@ data class Movie(
     val isFavorite: Boolean = false
 ) : Serializable {
 
+    val thumbnailUrl: String
+        get() = "https://image.tmdb.org/t/p/w92$posterPath"
+
     val imageUrl: String
-        get() = "${Constants.BASE_URL}movie/$id/images$posterPath?api_key=${BuildConfig.API_KEY}"
+        get() = "https://image.tmdb.org/t/p/original$posterPath"
 }
