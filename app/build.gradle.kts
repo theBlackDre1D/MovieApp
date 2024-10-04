@@ -46,6 +46,9 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":movieList"))
+    implementation(project(":movieDetail"))
+    implementation(project(":settings"))
+    implementation(project(":info"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -67,4 +70,10 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    // Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.ui)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
 }

@@ -12,7 +12,10 @@ interface MovieDao {
 
     // Selects
     @Query("SELECT * FROM $MOVIE_TABLE_NAME")
-    fun getAllMoviesPaged(): PagingSource<Int, MovieEntity >
+    fun getAllMoviesPaged(): PagingSource<Int, MovieEntity>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM $MOVIE_TABLE_NAME WHERE id = :movieId AND isFavorite = 1)")
+    suspend fun isMovieFavorite(movieId: Int): Boolean
 
     // Inserts
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -1,4 +1,4 @@
-package co.init.movielist.domain
+package co.init.database.domain
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -32,6 +32,12 @@ class MovieLocalDataSource @Inject constructor(
 
     suspend fun removeFromFavorites(movieEntity: MovieEntity)  = flow {
         emit(Result.success(movieDao.deleteMovie(movieEntity)))
+    }.catch {
+        emit(Result.failure(it))
+    }
+
+    suspend fun isFavoriteMovie(movieId: Int) = flow {
+        emit(Result.success(movieDao.isMovieFavorite(movieId)))
     }.catch {
         emit(Result.failure(it))
     }

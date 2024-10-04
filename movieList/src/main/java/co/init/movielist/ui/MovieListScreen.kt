@@ -11,11 +11,14 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
+import co.init.core.data.Movie
 import co.init.movielist.ui.components.ErrorItem
 import co.init.movielist.ui.components.MovieListItem
 
 @Composable
-fun MovieListScreen(viewModel: MovieListVM) {
+fun MovieListScreen(
+    viewModel: MovieListVM,
+    openMovieDetail: (Movie) -> Unit) {
     val remoteMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val localMovies = viewModel.favoriteMovies.collectAsLazyPagingItems()
 
@@ -33,9 +36,7 @@ fun MovieListScreen(viewModel: MovieListVM) {
                     MovieListItem(
                         movie = movie,
                         viewModel,
-                        onMovieClick = {
-                            // TODO open detail
-                        }
+                        onMovieClick = { openMovieDetail(it) }
                     )
                 }
             }
@@ -70,9 +71,7 @@ fun MovieListScreen(viewModel: MovieListVM) {
                                     MovieListItem(
                                         movie = movie,
                                         viewModel,
-                                        onMovieClick = {
-                                            // TODO open detail
-                                        }
+                                        onMovieClick = { openMovieDetail(it) }
                                     )
                                 }
                             }

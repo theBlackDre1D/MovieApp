@@ -1,11 +1,10 @@
-package co.init.movielist.domain.useCases
+package co.init.moviedetail.domain
 
 import co.init.core.data.Movie
-import co.init.movielist.domain.MovieRepository
 import javax.inject.Inject
 
 class RemoveFromFavoritesUseCase @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieDetailRepository
 ) {
 
     suspend operator fun invoke(movie: Movie) = movieRepository.removeMovieFromFavorites(movie)
