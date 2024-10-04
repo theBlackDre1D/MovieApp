@@ -3,9 +3,20 @@ package co.init.movielist.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
@@ -13,14 +24,17 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import co.init.core.data.Movie
+import co.init.movielist.R
 import co.init.movielist.ui.components.ErrorItem
 import co.init.movielist.ui.components.MovieListItem
 
 @Composable
 fun MovieListScreen(
     viewModel: MovieListVM = hiltViewModel(),
-    openMovieDetail: (Movie) -> Unit) {
+    openMovieDetail: (Movie) -> Unit
+) {
     val remoteMovies = viewModel.popularMovies.collectAsLazyPagingItems()
+    val fetchingMoviesState by remember { derivedStateOf { remoteMovies.loadState.refresh } }
     val localMovies = viewModel.favoriteMovies.collectAsLazyPagingItems()
 
     Column {
@@ -42,45 +56,51 @@ fun MovieListScreen(
                 }
             }
 
-            remoteMovies.apply {
-                when (loadState.append) {
-                    is LoadState.Loading -> {
-                        item {
-                            // TODO better progress
-                            CircularProgressIndicator()
-                        }
-                    }
-
-                    is LoadState.Error -> {
-                        // TODO do it better
-                        val error = remoteMovies.loadState.append as LoadState.Error
-                        item {
-                            ErrorItem(
-                                message = error.error.localizedMessage ?: "An error occurred",
-                                onRetry = { remoteMovies.retry() }
+            when (fetchingMoviesState) {
+                is LoadState.Loading -> {
+                    item {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(40.dp)
                             )
                         }
+                    }
+                }
 
-                        // Show favorites movies from DB if some
-                        if (remoteMovies.itemCount == 0) {
-                            items(
-                                count = localMovies.itemCount,
-                                key = localMovies.itemKey { it.id },
-                                contentType = localMovies.itemContentType()
-                            ) { index ->
-                                localMovies[index]?.let { movie ->
-                                    MovieListItem(
-                                        movie = movie,
-                                        viewModel,
-                                        onMovieClick = { openMovieDetail(it) }
-                                    )
-                                }
+                is LoadState.Error -> {
+                    val error = fetchingMoviesState as LoadState.Error
+                    item {
+                        ErrorItem(
+                            message = error.error.localizedMessage ?: stringResource(R.string.common_error_text),
+                            onRetry = { remoteMovies.retry() }
+                        )
+                    }
+
+                    // Show favorites movies from DB if some
+                    if (remoteMovies.itemCount == 0) {
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text("Your favorite movies")
+                        }
+                        items(
+                            count = localMovies.itemCount,
+                            key = localMovies.itemKey { it.id },
+                            contentType = localMovies.itemContentType()
+                        ) { index ->
+                            localMovies[index]?.let { movie ->
+                                MovieListItem(
+                                    movie = movie,
+                                    viewModel,
+                                    onMovieClick = { openMovieDetail(it) }
+                                )
                             }
                         }
                     }
-
-                    else -> {}
                 }
+                else -> {}
             }
         }
     }
