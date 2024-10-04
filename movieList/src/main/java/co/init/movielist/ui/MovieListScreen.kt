@@ -44,7 +44,6 @@ fun MovieListScreen(
         ) {
             items(
                 count = remoteMovies.itemCount,
-                key = remoteMovies.itemKey { it.id },
                 contentType = remoteMovies.itemContentType()
             ) { index ->
                 remoteMovies[index]?.let { movie ->
