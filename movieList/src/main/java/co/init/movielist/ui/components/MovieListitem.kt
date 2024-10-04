@@ -44,7 +44,7 @@ fun MovieListItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp),
+                .height(100.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -53,9 +53,9 @@ fun MovieListItem(
                 model = movie.thumbnailUrl,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(100.dp)
                     .padding(16.dp),
-                contentScale = ContentScale.Fit,
+                contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.ic_error),
                 placeholder = painterResource(id = R.drawable.ic_photo_placeholder)
             )
