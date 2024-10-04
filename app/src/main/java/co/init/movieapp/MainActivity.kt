@@ -22,7 +22,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MovieAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
                     MovieListScreen(viewModel)
                 }
             }

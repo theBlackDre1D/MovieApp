@@ -16,7 +16,8 @@ import co.init.movielist.ui.components.MovieListItem
 
 @Composable
 fun MovieListScreen(viewModel: MovieListVM) {
-    val movies = viewModel.popularMovies.collectAsLazyPagingItems()
+    val remoteMovies = viewModel.popularMovies.collectAsLazyPagingItems()
+    val localMovies = viewModel.favoriteMovies.collectAsLazyPagingItems()
 
     Column {
         LazyColumn(
@@ -24,17 +25,22 @@ fun MovieListScreen(viewModel: MovieListVM) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(
-                count = movies.itemCount,
-                key = movies.itemKey { it.id },
-                contentType = movies.itemContentType()
+                count = remoteMovies.itemCount,
+                key = remoteMovies.itemKey { it.id },
+                contentType = remoteMovies.itemContentType()
             ) { index ->
-                val movie = movies[index]
-                movie?.let {
-                    MovieListItem(it)
+                remoteMovies[index]?.let { movie ->
+                    MovieListItem(
+                        movie = movie,
+                        viewModel,
+                        onMovieClick = {
+                            // TODO open detail
+                        }
+                    )
                 }
             }
 
-            movies.apply {
+            remoteMovies.apply {
                 when (loadState.append) {
                     is LoadState.Loading -> {
                         item {
@@ -45,14 +51,34 @@ fun MovieListScreen(viewModel: MovieListVM) {
 
                     is LoadState.Error -> {
                         // TODO do it better
-                        val error = movies.loadState.append as LoadState.Error
+                        val error = remoteMovies.loadState.append as LoadState.Error
                         item {
                             ErrorItem(
                                 message = error.error.localizedMessage ?: "An error occurred",
-                                onRetry = { movies.retry() }
+                                onRetry = { remoteMovies.retry() }
                             )
                         }
+
+                        // Show favorites movies from DB if some
+                        if (remoteMovies.itemCount == 0) {
+                            items(
+                                count = localMovies.itemCount,
+                                key = localMovies.itemKey { it.id },
+                                contentType = localMovies.itemContentType()
+                            ) { index ->
+                                localMovies[index]?.let { movie ->
+                                    MovieListItem(
+                                        movie = movie,
+                                        viewModel,
+                                        onMovieClick = {
+                                            // TODO open detail
+                                        }
+                                    )
+                                }
+                            }
+                        }
                     }
+
                     else -> {}
                 }
             }

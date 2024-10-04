@@ -1,5 +1,6 @@
 package co.init.database
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -11,7 +12,7 @@ interface MovieDao {
 
     // Selects
     @Query("SELECT * FROM $MOVIE_TABLE_NAME")
-    suspend fun getAllMovies(): List<MovieEntity>
+    fun getAllMoviesPaged(): PagingSource<Int, MovieEntity >
 
     // Inserts
     @Insert(onConflict = OnConflictStrategy.REPLACE)

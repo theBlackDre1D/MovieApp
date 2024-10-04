@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import co.init.core.data.Movie
 import co.init.movielist.R
+import co.init.movielist.ui.MovieListVM
 import co.init.network.BuildConfig
 import co.init.network.NetworkModules
 import coil.compose.AsyncImage
@@ -25,11 +27,14 @@ import coil.compose.AsyncImage
 @Composable
 fun MovieListItem(
     movie: Movie,
-    onFavoriteIconClick: (Movie) -> Unit,
+    movieListVM: MovieListVM,
     onMovieClick: (Movie) -> Unit
 ) {
     Column(
-        modifier = Modifier.clickable { onMovieClick(movie) }
+        modifier = Modifier
+            .wrapContentHeight()
+            .clickable { onMovieClick(movie) },
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
             modifier = Modifier
@@ -54,26 +59,24 @@ fun MovieListItem(
             // Movie title
             Text(
                 text = movie.title,
-                modifier = Modifier.padding(horizontal = 16.dp),
-            )
-
-            // Favorite
-            val favoriteIcon =
-                painterResource(id = if (movie.isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite)
-            Image(
-                painter = favoriteIcon,
-                contentDescription = null,
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp)
-                    .clickable { onFavoriteIconClick(movie) }
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
             )
         }
+
+        // Favorite
+        Image(
+            painter = painterResource(if (movie.isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite),
+            contentDescription = null,
+            modifier = Modifier
+                .size(40.dp)
+        )
 
         HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(2.dp)
+                .height(4.dp)
         )
     }
 }

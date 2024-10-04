@@ -10,6 +10,7 @@ class MovieRepository @Inject constructor(
 ) {
 
     fun getPopularMovies() = remoteDataSource.getPopularMovies()
-    suspend fun getSavedMovies() = localDataSource.getAllFavoriteMovies()
+    fun getAllFavoriteMovies() = localDataSource.getAllMoviesPaged()
     suspend fun addFavoriteMovie(movie: Movie) = localDataSource.addToFavorites(EntityMapper.toMovieEntity(movie.copy(isFavorite = true)))
+    suspend fun removeMovieFromFavorites(movie: Movie) = localDataSource.removeFromFavorites(EntityMapper.toMovieEntity(movie.copy(isFavorite = true)))
 }
