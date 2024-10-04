@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import co.init.core.data.Constants
 import co.init.core.data.Movie
 import co.init.moviedetail.R
 import coil.compose.AsyncImage
@@ -44,7 +43,7 @@ fun MovieDetailScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = Constants.BOTTOM_NAVIGATION_HEIGHT.dp)
+            .padding(16.dp)
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

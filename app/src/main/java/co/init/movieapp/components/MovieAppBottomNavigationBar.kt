@@ -1,7 +1,6 @@
 package co.init.movieapp.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -15,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import co.init.core.data.Constants
 import co.init.movieapp.navigation.HomeNavigationScreen
 
 @Composable
@@ -29,9 +27,7 @@ fun MovieAppBottomNavigationBar(navController: NavController) {
         HomeNavigationScreen.Info
     )
 
-    NavigationBar(
-        modifier = Modifier.height(Constants.BOTTOM_NAVIGATION_HEIGHT.dp)
-    ) {
+    NavigationBar {
         bottomNavigationScreens.forEach { screen ->
             NavigationBarItem(
                 modifier = Modifier.padding(bottom = 8.dp),

@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,7 +43,11 @@ class MainActivity : ComponentActivity() {
                     bottomBar = { MovieAppBottomNavigationBar(navController) }
                 ) { innerPadding ->
 
-                    NavHost(navController = navController, startDestination = HomeNavigationScreen.Home.route) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = HomeNavigationScreen.Home.route,
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
 
                         // Bottom navigation screens
                         composable(HomeNavigationScreen.Home.route) {
