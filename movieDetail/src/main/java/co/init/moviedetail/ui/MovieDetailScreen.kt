@@ -37,7 +37,7 @@ fun MovieDetailScreen(
     val scrollState = rememberScrollState()
 
     LaunchedEffect(isFavorite) {
-        viewModel.checkIsFavorite()
+        viewModel.checkIsFavorite(movie)
     }
 
     Column(
@@ -74,7 +74,7 @@ fun MovieDetailScreen(
                 contentDescription = null,
                 modifier = Modifier
                     .size(60.dp)
-                    .clickable { viewModel.onFavoriteIconClick(isFavorite.value) }
+                    .clickable { viewModel.onFavoriteIconClick(isFavorite.value, movie) }
             )
         }
 

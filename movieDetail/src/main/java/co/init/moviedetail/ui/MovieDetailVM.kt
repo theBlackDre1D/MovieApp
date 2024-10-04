@@ -1,8 +1,6 @@
 package co.init.moviedetail.ui
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.navigation.toRoute
 import co.init.core.data.Movie
 import co.init.core.extensions.doInIOCoroutine
 import co.init.database.domain.IsFavoriteMovieUseCase
@@ -17,15 +15,12 @@ import javax.inject.Inject
 class MovieDetailVM @Inject constructor(
     private val addToFavoritesUseCase: AddToFavoritesUseCase,
     private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
-    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-    savedStateHandle: SavedStateHandle
+    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase
 ) : ViewModel() {
-
-    private val movie = savedStateHandle.toRoute<Movie>()
 
     val isFavoriteFlow = MutableStateFlow(false)
 
-    fun checkIsFavorite() {
+    fun checkIsFavorite(movie: Movie) {
         doInIOCoroutine {
             isFavoriteMovieUseCase(movie.id).collect { isFavorite ->
                 isFavoriteFlow.update { isFavorite }
@@ -33,7 +28,7 @@ class MovieDetailVM @Inject constructor(
         }
     }
 
-    fun onFavoriteIconClick(currentFavoriteState: Boolean) {
+    fun onFavoriteIconClick(currentFavoriteState: Boolean, movie: Movie) {
         doInIOCoroutine {
             if (currentFavoriteState) {
                 removeFromFavoritesUseCase(movie).collect { result ->
