@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.init.core.data.Movie
 import co.init.movielist.R
 import co.init.movielist.ui.MovieListVM
@@ -30,6 +31,8 @@ fun MovieListItem(
     movieListVM: MovieListVM,
     onMovieClick: (Movie) -> Unit
 ) {
+    val isFavorite = movieListVM.isFavorite(movie).collectAsStateWithLifecycle(false)
+
     Column(
         modifier = Modifier
             .wrapContentHeight()
@@ -66,8 +69,9 @@ fun MovieListItem(
         }
 
         // Favorite
+        val imageResource = if (isFavorite.value) R.drawable.ic_favorite else R.drawable.ic_not_favorite
         Image(
-            painter = painterResource(if (movie.isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite),
+            painter = painterResource(imageResource),
             contentDescription = null,
             modifier = Modifier
                 .size(40.dp)

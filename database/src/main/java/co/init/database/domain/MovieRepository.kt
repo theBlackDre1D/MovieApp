@@ -6,5 +6,5 @@ class MovieRepository @Inject constructor(
     private val localDataSource: MovieLocalDataSource
 ) {
 
-    suspend fun isFavoriteMovie(movieId: Int) = localDataSource.isFavoriteMovie(movieId)
+    fun isFavoriteMovie(movieId: Int) = localDataSource.isFavoriteMovie(movieId)
 }

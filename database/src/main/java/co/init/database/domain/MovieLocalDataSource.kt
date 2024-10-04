@@ -36,9 +36,9 @@ class MovieLocalDataSource @Inject constructor(
         emit(Result.failure(it))
     }
 
-    suspend fun isFavoriteMovie(movieId: Int) = flow {
-        emit(Result.success(movieDao.isMovieFavorite(movieId)))
+    fun isFavoriteMovie(movieId: Int) = flow {
+        emit(movieDao.isMovieFavorite(movieId))
     }.catch {
-        emit(Result.failure(it))
+        emit(false)
     }
 }
