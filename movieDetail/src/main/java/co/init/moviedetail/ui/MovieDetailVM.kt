@@ -5,37 +5,50 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
 import co.init.core.data.Movie
 import co.init.core.extensions.doInIOCoroutine
+import co.init.database.domain.IsFavoriteMovieUseCase
 import co.init.moviedetail.domain.AddToFavoritesUseCase
 import co.init.moviedetail.domain.RemoveFromFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailVM @Inject constructor(
     private val addToFavoritesUseCase: AddToFavoritesUseCase,
     private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
+    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val movie = savedStateHandle.toRoute<Movie>()
+    private val movie = savedStateHandle.toRoute<Movie>()
 
-    fun onFavoriteIconClick(movie: Movie) {
-        if (movie.isFavorite) {
-            removeFromFavorites(movie)
-        } else {
-            addToFavorites(movie)
+    val isFavoriteFlow = MutableStateFlow(false)
+
+    fun checkIsFavorite() {
+        doInIOCoroutine {
+            isFavoriteMovieUseCase(movie.id).collect { isFavorite ->
+                isFavoriteFlow.update { isFavorite }
+            }
         }
     }
 
-    private fun addToFavorites(movie: Movie) {
+    fun onFavoriteIconClick(currentFavoriteState: Boolean) {
         doInIOCoroutine {
-            addToFavoritesUseCase(movie).collect { }
-        }
-    }
+            if (currentFavoriteState) {
+                removeFromFavoritesUseCase(movie).collect { result ->
+                    result.onSuccess {
+                        isFavoriteFlow.update { false }
+                    }
+                }
 
-    private fun removeFromFavorites(movie: Movie) {
-        doInIOCoroutine {
-            removeFromFavoritesUseCase(movie).collect { }
+            } else {
+                addToFavoritesUseCase(movie).collect { result ->
+                    result.onSuccess {
+                        isFavoriteFlow.update { true }
+                    }
+                }
+            }
         }
     }
 }
