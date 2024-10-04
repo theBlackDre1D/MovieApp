@@ -18,8 +18,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import co.init.core.BuildConfig
-import co.init.core.data.BASE_URL
 import co.init.core.data.Movie
 import co.init.movielist.R
 import co.init.movielist.ui.MovieListVM
@@ -47,9 +45,8 @@ fun MovieListItem(
         ) {
 
             // Icon
-            val imageUrl = "${BASE_URL}movie/${movie.id}/images${movie.posterPath}?api_key=${BuildConfig.API_KEY}"
             AsyncImage(
-                model = imageUrl,
+                model = movie.imageUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .size(80.dp)

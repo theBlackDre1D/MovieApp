@@ -1,5 +1,6 @@
 package co.init.core.data
 
+import co.init.core.BuildConfig
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -19,4 +20,8 @@ data class Movie(
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int,
     val isFavorite: Boolean = false
-) : Serializable
+) : Serializable {
+
+    val imageUrl: String
+        get() = "${Constants.BASE_URL}movie/$id/images$posterPath?api_key=${BuildConfig.API_KEY}"
+}

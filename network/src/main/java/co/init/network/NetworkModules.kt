@@ -1,6 +1,6 @@
 package co.init.network
 
-import co.init.core.data.BASE_URL
+import co.init.core.data.Constants
 import co.init.network.interceptors.ApiKeyInterceptor
 import com.google.gson.Gson
 import dagger.Module
@@ -31,7 +31,7 @@ object NetworkModules {
         gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
