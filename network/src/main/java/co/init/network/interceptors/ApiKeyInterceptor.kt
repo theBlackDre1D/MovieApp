@@ -9,7 +9,7 @@ class ApiKeyInterceptor : Interceptor {
         val originalRequest = chain.request()
 
         val urlWithApiKey = originalRequest.url.newBuilder()
-            .addQueryParameter("api_key", BuildConfig.API_KEY) // TODO Lepsie by to bolo ukladat v keystore a nepribalovat to v kode
+            .addQueryParameter("api_key", BuildConfig.API_KEY) // Lepsie by to bolo ukladat v keystore a nepribalovat to v kode
             .build()
 
         val newRequest = originalRequest.newBuilder()

@@ -15,7 +15,7 @@ class MoviePagingRemoteSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         val page = params.key ?: 1
 
-        return try { // TODO tato logika by sa dala vynat niekde a byt prepouzitelna pre ine requesty
+        return try {
             val response = movieService.getPopularMovies(page = page)
             if (response.isSuccessful) {
                 val movies = response.body()?.results.orEmpty()
