@@ -19,10 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.init.core.BuildConfig
+import co.init.core.data.BASE_URL
 import co.init.core.data.Movie
 import co.init.moviedetail.R
-import co.init.network.BuildConfig
-import co.init.network.NetworkModules
 import coil.compose.AsyncImage
 
 @Composable
@@ -53,7 +53,7 @@ fun MovieDetailScreen(
         )
 
         // Icon
-        val imageUrl = "${NetworkModules.BASE_URL}movie/${movie.id}/images${movie.posterPath}?api_key=${BuildConfig.API_KEY}"
+        val imageUrl = "${BASE_URL}movie/${movie.id}/images${movie.posterPath}?api_key=${BuildConfig.API_KEY}"
         AsyncImage(
             model = imageUrl,
             contentDescription = null,

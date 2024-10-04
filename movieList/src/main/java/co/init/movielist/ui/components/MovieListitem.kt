@@ -18,11 +18,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.init.core.BuildConfig
+import co.init.core.data.BASE_URL
 import co.init.core.data.Movie
 import co.init.movielist.R
 import co.init.movielist.ui.MovieListVM
-import co.init.network.BuildConfig
-import co.init.network.NetworkModules
 import coil.compose.AsyncImage
 
 @Composable
@@ -47,7 +47,7 @@ fun MovieListItem(
         ) {
 
             // Icon
-            val imageUrl = "${NetworkModules.BASE_URL}movie/${movie.id}/images${movie.posterPath}?api_key=${BuildConfig.API_KEY}"
+            val imageUrl = "${BASE_URL}movie/${movie.id}/images${movie.posterPath}?api_key=${BuildConfig.API_KEY}"
             AsyncImage(
                 model = imageUrl,
                 contentDescription = null,

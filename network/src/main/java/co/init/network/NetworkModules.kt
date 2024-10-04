@@ -1,5 +1,6 @@
 package co.init.network
 
+import co.init.core.data.BASE_URL
 import co.init.network.interceptors.ApiKeyInterceptor
 import com.google.gson.Gson
 import dagger.Module
@@ -19,7 +20,6 @@ import javax.inject.Singleton
 object NetworkModules {
 
     private const val CONNECTION_TIMEOUT_SECONDS = 30L
-    const val BASE_URL = "https://api.themoviedb.org/3/"
 
     @Provides
     fun provideGson(): Gson = Gson()
