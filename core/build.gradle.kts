@@ -48,10 +48,13 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // Gson
     implementation(libs.converter.gson)
 
+    // Coroutines
     implementation(libs.coroutines)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
+    // Serialization
     implementation(libs.kotlinx.serialization.json)
 }
