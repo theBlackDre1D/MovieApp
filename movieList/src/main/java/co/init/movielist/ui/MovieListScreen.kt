@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
@@ -17,7 +18,7 @@ import co.init.movielist.ui.components.MovieListItem
 
 @Composable
 fun MovieListScreen(
-    viewModel: MovieListVM,
+    viewModel: MovieListVM = hiltViewModel(),
     openMovieDetail: (Movie) -> Unit) {
     val remoteMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val localMovies = viewModel.favoriteMovies.collectAsLazyPagingItems()

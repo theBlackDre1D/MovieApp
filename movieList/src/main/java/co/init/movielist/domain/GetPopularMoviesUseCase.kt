@@ -1,6 +1,5 @@
-package co.init.movielist.domain.useCases
+package co.init.movielist.domain
 
-import co.init.movielist.domain.MovieListRepository
 import javax.inject.Inject
 
 class GetPopularMoviesUseCase @Inject constructor(

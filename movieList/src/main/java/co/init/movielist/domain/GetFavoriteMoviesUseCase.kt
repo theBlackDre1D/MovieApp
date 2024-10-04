@@ -1,8 +1,7 @@
-package co.init.movielist.domain.useCases
+package co.init.movielist.domain
 
 import androidx.paging.map
 import co.init.database.EntityMapper
-import co.init.movielist.domain.MovieListRepository
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 

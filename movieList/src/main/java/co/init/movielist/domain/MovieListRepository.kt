@@ -1,6 +1,7 @@
 package co.init.movielist.domain
 
 import co.init.database.domain.MovieLocalDataSource
+import co.init.network.domain.MovieRemoteDataSource
 import javax.inject.Inject
 
 class MovieListRepository @Inject constructor(

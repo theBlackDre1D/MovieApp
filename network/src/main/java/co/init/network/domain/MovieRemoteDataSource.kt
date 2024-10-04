@@ -1,4 +1,4 @@
-package co.init.movielist.domain
+package co.init.network.domain
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
