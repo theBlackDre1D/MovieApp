@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailVM @Inject constructor(
+class MovieDetailScreenVM @Inject constructor(
     private val addToFavoritesUseCase: AddToFavoritesUseCase,
     private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase

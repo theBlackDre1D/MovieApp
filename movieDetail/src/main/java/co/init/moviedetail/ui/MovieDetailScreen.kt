@@ -41,10 +41,10 @@ fun MovieDetailScreen(movie: Movie) {
 }
 
 @Composable
-fun MovieDetailScreenPortrait(
+private fun MovieDetailScreenPortrait(
     movie: Movie
 ) {
-    val viewModel: MovieDetailVM = hiltViewModel()
+    val viewModel: MovieDetailScreenVM = hiltViewModel()
 
     val isFavorite = viewModel.isFavoriteFlow.collectAsStateWithLifecycle(false)
     val scrollState = rememberScrollState()
@@ -112,10 +112,10 @@ fun MovieDetailScreenPortrait(
 }
 
 @Composable
-fun MovieDetailScreenLandscape(
+private fun MovieDetailScreenLandscape(
     movie: Movie
 ) {
-    val viewModel: MovieDetailVM = hiltViewModel()
+    val viewModel: MovieDetailScreenVM = hiltViewModel()
 
     val isFavorite = viewModel.isFavoriteFlow.collectAsStateWithLifecycle(false)
     val scrollState = rememberScrollState()
@@ -180,18 +180,6 @@ fun MovieDetailScreenLandscape(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = movie.overview,
-                fontSize = 16.sp
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = movie.overview,
-                fontSize = 16.sp
-            )
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),

@@ -3,14 +3,12 @@ package co.init.movieapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,18 +20,21 @@ import co.init.movieapp.ui.theme.MovieAppTheme
 import co.init.moviedetail.ui.MovieDetailActivity
 import co.init.movielist.ui.MovieListScreen
 import co.init.settings.SettingsScreen
-import co.init.settings.ThemeSettings
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private val viewModel: MainActivityVM by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val isDarkThemeByDefault = isSystemInDarkTheme()
-            var appDarkTheme by rememberSaveable { mutableStateOf(isDarkThemeByDefault) }
-            MovieAppTheme(darkTheme = appDarkTheme) {
+            val useSystemDefaultTheme by viewModel.useSystemDefaultTheme.collectAsState(true)
+            val useDarkTheme by viewModel.useDarkTheme.collectAsState(true)
+            MovieAppTheme(
+                darkTheme = if (useSystemDefaultTheme) true else useDarkTheme
+            ) {
                 val navController = rememberNavController()
 
                 Scaffold(
@@ -47,21 +48,12 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable(HomeNavigationScreen.Home.route) {
-                            MovieListScreen() { movie ->
+                            MovieListScreen { movie ->
                                 MovieDetailActivity.startActivity(this@MainActivity, movie)
                             }
                         }
 
-                        composable(HomeNavigationScreen.Settings.route) {
-                            SettingsScreen(appDarkTheme) { newThemeSettings ->
-                                appDarkTheme = when (newThemeSettings) {
-                                    ThemeSettings.SYSTEM -> isDarkThemeByDefault
-                                    ThemeSettings.DARK -> true
-                                    ThemeSettings.LIGHT -> false
-                                }
-                            }
-                        }
-
+                        composable(HomeNavigationScreen.Settings.route) { SettingsScreen() }
                         composable(HomeNavigationScreen.Info.route) { InfoScreen() }
                     }
                 }
