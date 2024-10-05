@@ -31,10 +31,8 @@ class MoviePagingRemoteSource @Inject constructor(
                 LoadResult.Error(Exception(response.message()))
             }
         } catch (exception: IOException) {
-            // Network error
             LoadResult.Error(exception)
         } catch (exception: HttpException) {
-            // HTTP error
             LoadResult.Error(exception)
         } catch (exception: Exception) {
             LoadResult.Error(exception)

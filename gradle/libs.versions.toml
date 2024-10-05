@@ -71,4 +71,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kapt = { id = "kotlin-kapt" }
-hilt = { id = "dagger.hilt.android.plugin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
