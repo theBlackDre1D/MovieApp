@@ -15,7 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import co.init.info.InfoScreen
 import co.init.movieapp.components.MovieAppBottomNavigationBar
-import co.init.movieapp.navigation.HomeNavigationScreen
+import co.init.movieapp.navigation.BottomNavigationScreen
 import co.init.movieapp.ui.theme.MovieAppTheme
 import co.init.moviedetail.ui.MovieDetailActivity
 import co.init.movielist.ui.MovieListScreen
@@ -44,17 +44,17 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = HomeNavigationScreen.Home.route,
+                        startDestination = BottomNavigationScreen.Bottom.route,
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable(HomeNavigationScreen.Home.route) {
+                        composable(BottomNavigationScreen.Bottom.route) {
                             MovieListScreen { movie ->
                                 MovieDetailActivity.startActivity(this@MainActivity, movie)
                             }
                         }
 
-                        composable(HomeNavigationScreen.Settings.route) { SettingsScreen() }
-                        composable(HomeNavigationScreen.Info.route) { InfoScreen() }
+                        composable(BottomNavigationScreen.Settings.route) { SettingsScreen() }
+                        composable(BottomNavigationScreen.Info.route) { InfoScreen() }
                     }
                 }
             }

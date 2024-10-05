@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import co.init.movieapp.navigation.HomeNavigationScreen
+import co.init.movieapp.navigation.BottomNavigationScreen
 
 @Composable
 fun MovieAppBottomNavigationBar(navController: NavController) {
@@ -22,9 +22,9 @@ fun MovieAppBottomNavigationBar(navController: NavController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     val bottomNavigationScreens = listOf(
-        HomeNavigationScreen.Home,
-        HomeNavigationScreen.Settings,
-        HomeNavigationScreen.Info
+        BottomNavigationScreen.Bottom,
+        BottomNavigationScreen.Settings,
+        BottomNavigationScreen.Info
     )
 
     NavigationBar {

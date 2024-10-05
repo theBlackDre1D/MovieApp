@@ -7,5 +7,5 @@ class RemoveFromFavoritesUseCase @Inject constructor(
     private val movieRepository: MovieDetailRepository
 ) {
 
-    suspend operator fun invoke(movie: Movie) = movieRepository.removeMovieFromFavorites(movie)
+    operator fun invoke(movie: Movie) = movieRepository.removeMovieFromFavorites(movie)
 }

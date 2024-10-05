@@ -2,6 +2,7 @@ package co.init.moviedetail.ui
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,7 +35,11 @@ class MovieDetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val movie = intent.getSerializableExtra(MOVIE_BUNDLE_KEY, Movie::class.java)
+        val movie = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(MOVIE_BUNDLE_KEY, Movie::class.java)
+        } else {
+            intent.getSerializableExtra(MOVIE_BUNDLE_KEY) as? Movie
+        }
         if (movie == null) finishActivity(RESULT_CANCELED)
 
         setContent {

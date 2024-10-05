@@ -22,41 +22,4 @@ object EntityMapper {
             isFavorite = movie.isFavorite
         )
     }
-
-    fun toMovieEntities(movies: List<Movie>): List<MovieEntity> {
-        val entities = mutableListOf<MovieEntity>()
-        movies.forEach { movie ->
-            entities.add(toMovieEntity(movie))
-        }
-
-        return entities
-    }
-
-    fun toMovie(movieEntity: MovieEntity): Movie {
-        return Movie(
-            id = movieEntity.id!!,
-            adult = movieEntity.adult,
-            backdropPath = movieEntity.backdropPath,
-            originalLanguage = movieEntity.originalLanguage,
-            originalTitle = movieEntity.originalTitle,
-            overview = movieEntity.overview,
-            popularity = movieEntity.popularity,
-            posterPath = movieEntity.posterPath,
-            releaseDate = movieEntity.releaseDate,
-            title = movieEntity.title,
-            video = movieEntity.video,
-            voteAverage = movieEntity.voteAverage,
-            voteCount = movieEntity.voteCount,
-            isFavorite = movieEntity.isFavorite
-        )
-    }
-
-    fun toMovies(movies: List<MovieEntity>): List<Movie> {
-        val entities = mutableListOf<Movie>()
-        movies.forEach { movie ->
-            entities.add(toMovie(movie))
-        }
-
-        return entities
-    }
 }
