@@ -2,7 +2,7 @@ package co.init.database.domain
 
 import kotlinx.coroutines.flow.Flow
 
-interface IHasLocalDataSource {
+interface IIsFavoriteMovie {
 
     fun isFavoriteMovie(movieId: Int): Flow<Boolean>
 }
