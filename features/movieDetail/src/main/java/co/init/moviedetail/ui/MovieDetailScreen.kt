@@ -17,7 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -41,17 +41,12 @@ fun MovieDetailScreen(movie: Movie) {
 }
 
 @Composable
-private fun MovieDetailScreenPortrait(
-    movie: Movie
-) {
+private fun MovieDetailScreenPortrait(movie: Movie) {
     val viewModel: MovieDetailScreenVM = hiltViewModel()
+    viewModel.currentMovie = movie
 
-    val isFavorite = viewModel.isFavoriteFlow.collectAsStateWithLifecycle(false)
+    val isFavorite by viewModel.isFavoriteFlow.collectAsStateWithLifecycle(initialValue = movie.isFavorite)
     val scrollState = rememberScrollState()
-
-    LaunchedEffect(isFavorite) {
-        viewModel.checkIsFavorite(movie)
-    }
 
     Column(
         modifier = Modifier
@@ -80,14 +75,14 @@ private fun MovieDetailScreenPortrait(
                 .wrapContentHeight(),
             horizontalAlignment = Alignment.End
         ) {
-            val imageResource = if (isFavorite.value) R.drawable.ic_favorite else R.drawable.ic_not_favorite
+            val imageResource = if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite
             Image(
                 painter = painterResource(imageResource),
                 contentDescription = null,
                 modifier = Modifier
                     .size(60.dp)
                     .padding(top = 16.dp)
-                    .clickable { viewModel.onFavoriteIconClick(isFavorite.value, movie) }
+                    .clickable { viewModel.onFavoriteIconClick(isFavorite, movie) }
             )
         }
 
@@ -112,17 +107,12 @@ private fun MovieDetailScreenPortrait(
 }
 
 @Composable
-private fun MovieDetailScreenLandscape(
-    movie: Movie
-) {
+private fun MovieDetailScreenLandscape(movie: Movie) {
     val viewModel: MovieDetailScreenVM = hiltViewModel()
+    viewModel.currentMovie = movie
 
-    val isFavorite = viewModel.isFavoriteFlow.collectAsStateWithLifecycle(false)
+    val isFavorite = viewModel.isFavoriteFlow.collectAsStateWithLifecycle(initialValue = movie.isFavorite)
     val scrollState = rememberScrollState()
-
-    LaunchedEffect(isFavorite) {
-        viewModel.checkIsFavorite(movie)
-    }
 
     Row(
         modifier = Modifier

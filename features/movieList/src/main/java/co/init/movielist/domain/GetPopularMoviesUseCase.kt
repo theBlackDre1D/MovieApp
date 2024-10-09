@@ -6,5 +6,5 @@ class GetPopularMoviesUseCase @Inject constructor(
     private val repository: MovieListRepository
 ) {
 
-    operator fun invoke() = repository.getPopularMovies()
+    operator fun invoke() = repository.movies
 }
