@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -33,7 +34,7 @@ class MainActivity : ComponentActivity() {
             val useSystemDefaultTheme by viewModel.useSystemDefaultTheme.collectAsState(true)
             val useDarkTheme by viewModel.useDarkTheme.collectAsState(true)
             MovieAppTheme(
-                darkTheme = if (useSystemDefaultTheme) true else useDarkTheme
+                darkTheme = if (useSystemDefaultTheme) isSystemInDarkTheme() else useDarkTheme
             ) {
                 val navController = rememberNavController()
 
