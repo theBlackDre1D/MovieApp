@@ -22,7 +22,7 @@ import androidx.paging.compose.itemContentType
 import co.init.core.data.Movie
 import co.init.movielist.R
 import co.init.movielist.ui.components.ErrorItem
-import co.init.movielist.ui.components.MovieListItem
+import co.init.movielist.ui.components.movieListItem.MovieListItem
 
 @Composable
 fun MovieListScreen(
@@ -44,7 +44,6 @@ fun MovieListScreen(
                 remoteMovies[index]?.let { movie ->
                     MovieListItem(
                         movie = movie,
-                        viewModel,
                         onMovieClick = { openMovieDetail(it) }
                     )
                 }
