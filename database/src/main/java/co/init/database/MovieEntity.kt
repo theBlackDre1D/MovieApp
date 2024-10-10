@@ -11,7 +11,7 @@ data class MovieEntity(
 
     @PrimaryKey val id: Int? = null,
     val adult: Boolean,
-    val backdropPath: String,
+//    val backdropPath: String,
     val originalLanguage: String,
     val originalTitle: String,
     val overview: String,

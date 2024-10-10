@@ -1,15 +1,26 @@
 package co.init.movielist.domain
 
-import co.init.database.domain.IIsFavoriteMovie
-import co.init.database.domain.MovieLocalDataSource
-import co.init.network.domain.MovieRemoteDataSource
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import co.init.core.data.Movie
+import co.init.database.MovieDao
+import co.init.network.MovieService
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieListRepository @Inject constructor(
-    private val remoteDataSource: MovieRemoteDataSource,
-    private val localDataSource: MovieLocalDataSource
-) : IIsFavoriteMovie {
+    private val movieService: MovieService,
+    private val movieDao: MovieDao
+) {
 
-    fun getPopularMovies() = remoteDataSource.getPopularMovies()
-    override fun isFavoriteMovie(movieId: Int) = localDataSource.isFavoriteMovie(movieId)
+    fun getMovies(): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { MoviesMediator(movieService, movieDao) }
+        ).flow
+    }
 }

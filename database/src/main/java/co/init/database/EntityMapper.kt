@@ -8,7 +8,7 @@ object EntityMapper {
         return MovieEntity(
             id = movie.id,
             adult = movie.adult,
-            backdropPath = movie.backdropPath,
+//            backdropPath = movie.backdropPath,
             originalLanguage = movie.originalLanguage,
             originalTitle = movie.originalTitle,
             overview = movie.overview,

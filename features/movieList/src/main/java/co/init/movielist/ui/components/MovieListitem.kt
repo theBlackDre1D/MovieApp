@@ -1,4 +1,4 @@
-package co.init.movielist.ui.components.movieListItem
+package co.init.movielist.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -20,8 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.init.core.data.Movie
 import co.init.movielist.R
 import coil.compose.AsyncImage
@@ -31,9 +29,6 @@ fun MovieListItem(
     movie: Movie,
     onMovieClick: (Movie) -> Unit
 ) {
-    val viewModel: MovieListItemVM = hiltViewModel()
-
-    val isFavorite = viewModel.isFavorite(movie).collectAsStateWithLifecycle(false)
 
     Column(
         modifier = Modifier
@@ -71,7 +66,7 @@ fun MovieListItem(
             )
 
             // Favorite
-            val imageResource = if (isFavorite.value) R.drawable.ic_favorite else R.drawable.ic_not_favorite
+            val imageResource = if (movie.isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite
             Image(
                 painter = painterResource(imageResource),
                 contentDescription = null,

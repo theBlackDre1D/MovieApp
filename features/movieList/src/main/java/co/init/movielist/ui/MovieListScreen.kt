@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -16,13 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import co.init.core.data.Movie
 import co.init.movielist.R
 import co.init.movielist.ui.components.ErrorItem
-import co.init.movielist.ui.components.movieListItem.MovieListItem
+import co.init.movielist.ui.components.MovieListItem
 
 @Composable
 fun MovieListScreen(
@@ -31,6 +35,24 @@ fun MovieListScreen(
 ) {
     val remoteMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val fetchingMoviesState by remember { derivedStateOf { remoteMovies.loadState.refresh } }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val observer = remember {
+        LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                if (remoteMovies.itemCount > 0) {
+                    remoteMovies.refresh()
+                }
+            }
+        }
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
 
     Column {
         LazyColumn(
