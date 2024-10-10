@@ -26,7 +26,7 @@ import androidx.paging.compose.itemContentType
 import co.init.core.data.Movie
 import co.init.movielist.R
 import co.init.movielist.ui.components.ErrorItem
-import co.init.movielist.ui.components.movieListItem.MovieListItem
+import co.init.movielist.ui.components.MovieListItem
 
 @Composable
 fun MovieListScreen(

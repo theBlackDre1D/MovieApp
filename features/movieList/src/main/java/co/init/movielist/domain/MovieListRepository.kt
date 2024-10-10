@@ -23,5 +23,4 @@ class MovieListRepository @Inject constructor(
             pagingSourceFactory = { MoviesMediator(movieService, movieDao) }
         ).flow
     }
-
 }
