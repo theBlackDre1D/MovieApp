@@ -7,9 +7,8 @@ import co.init.database.MovieDao
 import co.init.network.MovieService
 import retrofit2.HttpException
 import java.io.IOException
-import javax.inject.Inject
 
-class MoviesMediator @Inject constructor(
+class MoviesMediator(
     private val movieService: MovieService,
     private val movieDao: MovieDao
 ) : PagingSource<Int, Movie>() {
