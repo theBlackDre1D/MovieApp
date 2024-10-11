@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import co.init.info.InfoScreen
 import co.init.movieapp.components.MovieAppBottomNavigationBar
+import co.init.movieapp.components.TopBar
 import co.init.movieapp.navigation.BottomNavigationScreen
 import co.init.movieapp.ui.theme.MovieAppTheme
 import co.init.moviedetail.ui.MovieDetailActivity
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
+                    topBar = { TopBar(navController) },
                     bottomBar = { MovieAppBottomNavigationBar(navController) }
                 ) { innerPadding ->
 
