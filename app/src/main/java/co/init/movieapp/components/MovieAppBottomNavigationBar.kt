@@ -22,7 +22,7 @@ fun MovieAppBottomNavigationBar(navController: NavController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     val bottomNavigationScreens = listOf(
-        BottomNavigationScreen.Bottom,
+        BottomNavigationScreen.Home,
         BottomNavigationScreen.Settings,
         BottomNavigationScreen.Info
     )

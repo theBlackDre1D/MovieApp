@@ -45,10 +45,10 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = BottomNavigationScreen.Bottom.route,
+                        startDestination = BottomNavigationScreen.Home.route,
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable(BottomNavigationScreen.Bottom.route) {
+                        composable(BottomNavigationScreen.Home.route) {
                             MovieListScreen { movie ->
                                 MovieDetailActivity.startActivity(this@MainActivity, movie)
                             }
