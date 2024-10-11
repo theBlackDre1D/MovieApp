@@ -34,7 +34,8 @@ fun MovieListScreen(
     openMovieDetail: (Movie) -> Unit
 ) {
     val remoteMovies = viewModel.popularMovies.collectAsLazyPagingItems()
-    val fetchingMoviesState by remember { derivedStateOf { remoteMovies.loadState.refresh } }
+    val refreshMoviesState by remember { derivedStateOf { remoteMovies.loadState.refresh } }
+    val appendMoviesState by remember { derivedStateOf { remoteMovies.loadState.append } }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val observer = remember {
@@ -71,23 +72,36 @@ fun MovieListScreen(
                 }
             }
 
-            when (fetchingMoviesState) {
+            // TODO try to do it better
+            when (refreshMoviesState ) {
                 is LoadState.Loading -> {
                     item {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(40.dp)
-                            )
-                        }
+                        LoadingItem()
                     }
                 }
 
                 is LoadState.Error -> {
-                    val error = fetchingMoviesState as LoadState.Error
                     item {
+                        val error = appendMoviesState as LoadState.Error
+                        ErrorItem(
+                            message = error.error.localizedMessage ?: stringResource(R.string.common_error_text),
+                            onRetry = { remoteMovies.retry() }
+                        )
+                    }
+                }
+                else -> {}
+            }
+
+            when (appendMoviesState) {
+                is LoadState.Loading -> {
+                    item {
+                        LoadingItem()
+                    }
+                }
+
+                is LoadState.Error -> {
+                    item {
+                        val error = appendMoviesState as LoadState.Error
                         ErrorItem(
                             message = error.error.localizedMessage ?: stringResource(R.string.common_error_text),
                             onRetry = { remoteMovies.retry() }
@@ -97,5 +111,17 @@ fun MovieListScreen(
                 else -> {}
             }
         }
+    }
+}
+
+@Composable
+private fun LoadingItem() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.size(40.dp)
+        )
     }
 }
