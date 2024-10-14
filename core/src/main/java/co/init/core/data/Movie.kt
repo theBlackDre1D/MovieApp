@@ -3,10 +3,10 @@ package co.init.core.data
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@kotlinx.serialization.Serializable
 data class Movie(
     @SerializedName("id") val id: Int,
     @SerializedName("adult") val adult: Boolean,
-//    @SerializedName("backdrop_path") val backdropPath: String,
     @SerializedName("original_language") val originalLanguage: String,
     @SerializedName("original_title") val originalTitle: String,
     @SerializedName("overview") val overview: String,

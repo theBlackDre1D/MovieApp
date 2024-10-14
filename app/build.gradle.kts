@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kapt)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinx.serialozation)
 }
 
 android {
@@ -77,4 +78,7 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }

@@ -13,13 +13,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import co.init.core.data.Movie
 import co.init.info.InfoScreen
 import co.init.movieapp.components.MovieAppBottomNavigationBar
 import co.init.movieapp.components.TopBar
-import co.init.movieapp.navigation.BottomNavigationScreen
+import co.init.movieapp.navigation.HomeNavigation
+import co.init.movieapp.navigation.MovieListNavigation
 import co.init.movieapp.ui.theme.MovieAppTheme
-import co.init.moviedetail.ui.MovieDetailActivity
+import co.init.moviedetail.ui.MovieDetailScreen
 import co.init.movielist.ui.MovieListScreen
 import co.init.settings.SettingsScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,17 +51,23 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = BottomNavigationScreen.Home.route,
+                        startDestination = HomeNavigation.Home,
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable(BottomNavigationScreen.Home.route) {
-                            MovieListScreen { movie ->
-                                MovieDetailActivity.startActivity(this@MainActivity, movie)
+                        navigation<HomeNavigation.Home>(startDestination = MovieListNavigation.MovieList) {
+                            composable<MovieListNavigation.MovieList> {
+                                MovieListScreen(
+                                    openMovieDetail = { navController.navigate(it) }
+                                )
+                            }
+
+                            composable<Movie> { backstackEntry ->
+                                MovieDetailScreen(backstackEntry.toRoute())
                             }
                         }
 
-                        composable(BottomNavigationScreen.Settings.route) { SettingsScreen() }
-                        composable(BottomNavigationScreen.Info.route) { InfoScreen() }
+                        composable<HomeNavigation.Settings> { SettingsScreen() }
+                        composable<HomeNavigation.Info> { InfoScreen() }
                     }
                 }
             }
