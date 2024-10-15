@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.derivedStateOf
@@ -32,6 +33,7 @@ fun MovieListScreen(
     val remoteMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val refreshMoviesState by remember { derivedStateOf { remoteMovies.loadState.refresh } }
     val appendMoviesState by remember { derivedStateOf { remoteMovies.loadState.append } }
+    val listState = rememberLazyListState()
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val observer = remember {
@@ -53,6 +55,7 @@ fun MovieListScreen(
 
     Column {
         LazyColumn(
+            state = listState,
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -70,12 +73,7 @@ fun MovieListScreen(
 
             // TODO try to do it better
             when (refreshMoviesState ) {
-                is LoadState.Loading -> {
-                    item {
-                        LoadingItem()
-                    }
-                }
-
+                is LoadState.Loading -> item { LoadingItem() }
                 is LoadState.Error -> {
                     item {
                         val error = appendMoviesState as LoadState.Error
@@ -89,12 +87,7 @@ fun MovieListScreen(
             }
 
             when (appendMoviesState) {
-                is LoadState.Loading -> {
-                    item {
-                        LoadingItem()
-                    }
-                }
-
+                is LoadState.Loading -> item { LoadingItem() }
                 is LoadState.Error -> {
                     item {
                         val error = appendMoviesState as LoadState.Error
