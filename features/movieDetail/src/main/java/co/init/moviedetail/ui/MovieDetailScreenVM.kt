@@ -21,14 +21,6 @@ class MovieDetailScreenVM @Inject constructor(
 
     private val _isFavoriteFlow: MutableStateFlow<Boolean> by lazy { MutableStateFlow(currentMovie.isFavorite) }
     val isFavoriteFlow: StateFlow<Boolean> get() = _isFavoriteFlow
-//
-//    fun checkIsFavorite(movie: Movie) {
-//        doInIOCoroutine {
-//            isFavoriteMovieUseCase(movie.id).collect { isFavorite ->
-//                isFavoriteFlow.update { isFavorite }
-//            }
-//        }
-//    }
 
     fun onFavoriteIconClick(currentFavoriteState: Boolean, movie: Movie) {
         doInIOCoroutine {
