@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -68,13 +67,16 @@ private fun MovieDetailScreenPortrait(movie: Movie) {
             placeholder = painterResource(id = R.drawable.ic_photo_placeholder)
         )
 
-        // Favorite
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalAlignment = Alignment.End
-        ) {
+        Row {
+            Text(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .weight(1f),
+                text = movie.title,
+                fontSize = 24.sp
+            )
+
+            // Favorite
             val imageResource = if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite
             Image(
                 painter = painterResource(imageResource),
@@ -85,15 +87,6 @@ private fun MovieDetailScreenPortrait(movie: Movie) {
                     .clickable { viewModel.onFavoriteIconClick(isFavorite, movie) }
             )
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            modifier = Modifier
-                .fillMaxWidth(),
-            text = movie.title,
-            fontSize = 24.sp
-        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -111,7 +104,7 @@ private fun MovieDetailScreenLandscape(movie: Movie) {
     val viewModel: MovieDetailScreenVM = hiltViewModel()
     viewModel.currentMovie = movie
 
-    val isFavorite = viewModel.isFavoriteFlow.collectAsStateWithLifecycle(initialValue = movie.isFavorite)
+    val isFavorite by viewModel.isFavoriteFlow.collectAsStateWithLifecycle(initialValue = movie.isFavorite)
     val scrollState = rememberScrollState()
 
     Row(
@@ -142,31 +135,26 @@ private fun MovieDetailScreenLandscape(movie: Movie) {
                 .verticalScroll(scrollState),
         ) {
 
-            // Favorite
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.End
-            ) {
-                val imageResource =
-                    if (isFavorite.value) R.drawable.ic_favorite else R.drawable.ic_not_favorite
+            Row {
+                Text(
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .weight(1f),
+                    text = movie.title,
+                    fontSize = 24.sp
+                )
+
+                // Favorite
+                val imageResource = if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite
                 Image(
                     painter = painterResource(imageResource),
                     contentDescription = null,
                     modifier = Modifier
                         .size(60.dp)
                         .padding(top = 16.dp)
-                        .clickable { viewModel.onFavoriteIconClick(isFavorite.value, movie) }
+                        .clickable { viewModel.onFavoriteIconClick(isFavorite, movie) }
                 )
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = movie.title,
-                fontSize = 24.sp
-            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
