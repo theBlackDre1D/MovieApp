@@ -19,7 +19,7 @@ class MovieLocalDataSource @Inject constructor(
         if (currentFavoriteStatus) {
             emit(Result.success(movieDao.deleteMovie(movieEntity)))
         } else {
-            emit(Result.success(movieDao.saveMovie(movieEntity)))
+            emit(Result.success(movieDao.saveMovie(movieEntity.copy(isFavorite = true))))
         }
     }.catch {
         emit(Result.failure(it))
