@@ -4,14 +4,14 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import co.init.core.data.Movie
-import co.init.database.domain.MovieDao
-import co.init.network.MovieService
+import co.init.database.data.EntityMapper
+import co.init.database.domain.MovieLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieListRepository @Inject constructor(
-    private val movieService: MovieService,
-    private val movieDao: MovieDao
+    private val movieRemoteDataSource: MovieRemoteDataSource,
+    private val movieLocalDataSource: MovieLocalDataSource
 ) {
 
     fun getMovies(): Flow<PagingData<Movie>> {
@@ -20,7 +20,10 @@ class MovieListRepository @Inject constructor(
                 pageSize = 20,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { MoviesMediator(movieService, movieDao) }
+            pagingSourceFactory = { MoviesMediator(movieRemoteDataSource, movieLocalDataSource) }
         ).flow
     }
+
+    fun toggleMovieFavoriteStatus(currentFavoriteStatus: Boolean, movie: Movie) =
+        movieLocalDataSource.toggleMovieFavoriteStatus(currentFavoriteStatus, EntityMapper.toMovieEntity(movie))
 }

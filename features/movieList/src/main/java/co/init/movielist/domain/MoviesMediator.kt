@@ -3,27 +3,26 @@ package co.init.movielist.domain
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import co.init.core.data.Movie
-import co.init.database.domain.MovieDao
-import co.init.network.MovieService
+import co.init.database.domain.MovieLocalDataSource
 import retrofit2.HttpException
 import java.io.IOException
 
 class MoviesMediator(
-    private val movieService: MovieService,
-    private val movieDao: MovieDao
+    private val movieRemoteDataSource: MovieRemoteDataSource,
+    private val movieLocalDataSource: MovieLocalDataSource
 ) : PagingSource<Int, Movie>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         val page = params.key ?: 1
 
         return try {
-            val response = movieService.getPopularMovies(page = page)
+            val response = movieRemoteDataSource.getPopularMovies(page = page)
             if (response.isSuccessful) {
                 val movies = response.body()?.results.orEmpty()
                 val nextKey = if (page < (response.body()?.totalPages ?: 0)) page + 1 else null
                 val prevKey = if (page == 1) null else page - 1
 
-                val favorites = movieDao.getAllFavoriteMoviesIds()
+                val favorites = movieLocalDataSource.getAllFavoriteMoviesIds()
 
                 val mappedMovies = movies.map {
                     it.copy(isFavorite = favorites.contains(it.id))
