@@ -62,7 +62,7 @@ private fun MovieDetailScreenPortrait(movie: Movie) {
             modifier = Modifier
                 .height(200.dp)
                 .fillMaxWidth() ,
-            contentScale = ContentScale.FillWidth,
+            contentScale = ContentScale.Fit,
             error = painterResource(id = R.drawable.ic_error),
             placeholder = painterResource(id = R.drawable.ic_photo_placeholder)
         )
@@ -121,7 +121,7 @@ private fun MovieDetailScreenLandscape(movie: Movie) {
             modifier = Modifier
                 .size(400.dp)
                 .fillMaxWidth() ,
-            contentScale = ContentScale.FillWidth,
+            contentScale = ContentScale.Fit,
             error = painterResource(id = R.drawable.ic_error),
             placeholder = painterResource(id = R.drawable.ic_photo_placeholder)
         )

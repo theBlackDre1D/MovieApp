@@ -2,8 +2,8 @@ package co.init.database.di
 
 import android.content.Context
 import androidx.room.Room
-import co.init.database.MovieDao
-import co.init.database.MovieDatabase
+import co.init.database.domain.MovieDao
+import co.init.database.domain.MovieDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

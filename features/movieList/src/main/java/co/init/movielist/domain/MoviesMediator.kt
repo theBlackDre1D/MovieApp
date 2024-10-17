@@ -3,7 +3,7 @@ package co.init.movielist.domain
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import co.init.core.data.Movie
-import co.init.database.MovieDao
+import co.init.database.domain.MovieDao
 import co.init.network.MovieService
 import retrofit2.HttpException
 import java.io.IOException

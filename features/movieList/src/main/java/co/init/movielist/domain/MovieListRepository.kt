@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import co.init.core.data.Movie
-import co.init.database.MovieDao
+import co.init.database.domain.MovieDao
 import co.init.network.MovieService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

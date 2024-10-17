@@ -1,10 +1,12 @@
-package co.init.database
+package co.init.database.domain
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import co.init.database.data.MOVIE_TABLE_NAME
+import co.init.database.data.MovieEntity
 
 @Dao
 interface MovieDao {

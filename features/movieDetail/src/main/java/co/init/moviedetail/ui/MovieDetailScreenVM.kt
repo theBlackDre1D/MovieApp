@@ -3,8 +3,7 @@ package co.init.moviedetail.ui
 import androidx.lifecycle.ViewModel
 import co.init.core.data.Movie
 import co.init.core.extensions.doInIOCoroutine
-import co.init.moviedetail.domain.AddToFavoritesUseCase
-import co.init.moviedetail.domain.RemoveFromFavoritesUseCase
+import co.init.moviedetail.domain.ToggleMovieFavoriteStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,8 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailScreenVM @Inject constructor(
-    private val addToFavoritesUseCase: AddToFavoritesUseCase,
-    private val removeFromFavoritesUseCase: RemoveFromFavoritesUseCase
+    private val toggleMovieFavoriteStatusUseCase: ToggleMovieFavoriteStatusUseCase
 ) : ViewModel() {
 
     lateinit var currentMovie: Movie
@@ -24,18 +22,9 @@ class MovieDetailScreenVM @Inject constructor(
 
     fun onFavoriteIconClick(currentFavoriteState: Boolean, movie: Movie) {
         doInIOCoroutine {
-            if (currentFavoriteState) {
-                removeFromFavoritesUseCase(movie).collect { result ->
-                    result.onSuccess {
-                        _isFavoriteFlow.update { false }
-                    }
-                }
-
-            } else {
-                addToFavoritesUseCase(movie).collect { result ->
-                    result.onSuccess {
-                        _isFavoriteFlow.update { true }
-                    }
+            toggleMovieFavoriteStatusUseCase(currentFavoriteState, movie).collect { result ->
+                result.onSuccess {
+                    _isFavoriteFlow.update { !currentFavoriteState }
                 }
             }
         }
