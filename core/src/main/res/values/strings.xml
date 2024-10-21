@@ -10,6 +10,7 @@
     <!--  Common  -->
     <string name="common_retry">Retry</string>
     <string name="common_error_text">An error occurred</string>
+    <string name="common_no_internet_connection">No internet connection...</string>
 
     <!--  Movie detail  -->
     <string name="movie_detail_popularity">User rating: %1$s</string>

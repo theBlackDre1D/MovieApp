@@ -32,8 +32,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val isConnectedToNetwork by viewModel.isConnectedToNetwork.collectAsState()
+
             val useSystemDefaultTheme by viewModel.useSystemDefaultTheme.collectAsState(true)
             val useDarkTheme by viewModel.useDarkTheme.collectAsState(true)
+
             MovieAppTheme(
                 darkTheme = if (useSystemDefaultTheme) isSystemInDarkTheme() else useDarkTheme
             ) {
@@ -41,8 +44,8 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    topBar = { TopBar(navController) },
-                    bottomBar = { MovieAppBottomNavigationBar(navController) }
+                    topBar = { TopBar(navController, isConnectedToNetwork) },
+                    bottomBar = { MovieAppBottomNavigationBar(navController) },
                 ) { innerPadding ->
 
                     NavHost(
