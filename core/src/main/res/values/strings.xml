@@ -11,6 +11,9 @@
     <string name="common_retry">Retry</string>
     <string name="common_error_text">An error occurred</string>
 
+    <!--  Movie detail  -->
+    <string name="movie_detail_popularity">User rating: %1$s</string>
+
     <!--    Info   -->
     <string name="info_app_version">App version: %1$s</string>
     <string name="info_app_code">Code: %1$s</string>

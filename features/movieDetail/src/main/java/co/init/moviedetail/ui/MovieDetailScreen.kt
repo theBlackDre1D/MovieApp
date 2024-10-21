@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -87,6 +88,15 @@ private fun MovieDetailScreenPortrait(movie: Movie) {
                     .clickable { viewModel.onFavoriteIconClick(isFavorite, movie) }
             )
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth(),
+            text = stringResource(R.string.movie_detail_popularity, movie.voteAverage.toString()),
+            fontSize = 16.sp
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -155,6 +165,15 @@ private fun MovieDetailScreenLandscape(movie: Movie) {
                         .clickable { viewModel.onFavoriteIconClick(isFavorite, movie) }
                 )
             }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = stringResource(R.string.movie_detail_popularity, movie.voteAverage.toString()),
+                fontSize = 16.sp
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
