@@ -23,10 +23,13 @@ rootProject.name = "MovieApp"
 include(":app")
 include(":core")
 include(":network")
+include(":database")
+include(":preferences")
+include(":base")
+
+// Features
 include(":features:settings")
 include(":features:movieDetail")
 include(":features:movieList")
 include(":features:info")
-include(":database")
-include(":preferences")
-include(":base")
+include(":features:favorites")

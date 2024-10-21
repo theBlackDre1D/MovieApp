@@ -13,18 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
-import co.init.core.data.Movie
+import co.init.core.navigation.HomeNavigation
 import co.init.info.InfoScreen
 import co.init.movieapp.components.MovieAppBottomNavigationBar
 import co.init.movieapp.components.TopBar
-import co.init.movieapp.navigation.HomeNavigation
-import co.init.movieapp.navigation.MovieListNavigation
+import co.init.movieapp.navigation.addFavoritesNavGraph
+import co.init.movieapp.navigation.addMovieListNavGraph
 import co.init.movieapp.ui.theme.MovieAppTheme
-import co.init.moviedetail.ui.MovieDetailScreen
-import co.init.movielist.ui.MovieListScreen
 import co.init.settings.SettingsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,17 +50,12 @@ class MainActivity : ComponentActivity() {
                         startDestination = HomeNavigation.Home,
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        navigation<HomeNavigation.Home>(startDestination = MovieListNavigation.MovieList) {
-                            composable<MovieListNavigation.MovieList> {
-                                MovieListScreen(
-                                    openMovieDetail = { navController.navigate(it) }
-                                )
-                            }
 
-                            composable<Movie> { backstackEntry ->
-                                MovieDetailScreen(backstackEntry.toRoute())
-                            }
-                        }
+                        // Home
+                        addMovieListNavGraph(navController)
+
+                        // Favorites
+                        addFavoritesNavGraph(navController)
 
                         composable<HomeNavigation.Settings> { SettingsScreen() }
                         composable<HomeNavigation.Info> { InfoScreen() }

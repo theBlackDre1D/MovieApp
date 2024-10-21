@@ -11,8 +11,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import co.init.favorites.navigation.FavoriteListNavigation
 import co.init.movieapp.navigation.HomeNavigationItems
-import co.init.movieapp.navigation.MovieListNavigation
+import co.init.movielist.navigation.MovieListNavigation
 
 @Composable
 fun MovieAppBottomNavigationBar(navController: NavController) {
@@ -21,6 +22,7 @@ fun MovieAppBottomNavigationBar(navController: NavController) {
 
     val homeNavigationItems = listOf(
         HomeNavigationItems.Home,
+        HomeNavigationItems.Favorites,
         HomeNavigationItems.Settings,
         HomeNavigationItems.Info
     )
@@ -48,7 +50,9 @@ fun MovieAppBottomNavigationBar(navController: NavController) {
 // TODO try make it better
 fun showBottomNavigationBar(currentRoute: String?): Boolean {
     return currentRoute == HomeNavigationItems.Home.destination::class.qualifiedName ||
+            currentRoute == HomeNavigationItems.Favorites.destination::class.qualifiedName ||
             currentRoute == HomeNavigationItems.Settings.destination::class.qualifiedName ||
             currentRoute == HomeNavigationItems.Info.destination::class.qualifiedName ||
-            currentRoute == MovieListNavigation.MovieList::class.qualifiedName
+            currentRoute == MovieListNavigation.MovieList::class.qualifiedName ||
+            currentRoute == FavoriteListNavigation.FavoriteList::class.qualifiedName
 }

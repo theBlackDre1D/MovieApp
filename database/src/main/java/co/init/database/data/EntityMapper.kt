@@ -8,7 +8,6 @@ object EntityMapper {
         return MovieEntity(
             id = movie.id,
             adult = movie.adult,
-//            backdropPath = movie.backdropPath,
             originalLanguage = movie.originalLanguage,
             originalTitle = movie.originalTitle,
             overview = movie.overview,
@@ -20,6 +19,24 @@ object EntityMapper {
             voteAverage = movie.voteAverage,
             voteCount = movie.voteCount,
             isFavorite = movie.isFavorite
+        )
+    }
+
+    fun toMovie(movieEntity: MovieEntity): Movie {
+        return Movie(
+            id = movieEntity.id!!,
+            adult = movieEntity.adult,
+            originalLanguage = movieEntity.originalLanguage,
+            originalTitle = movieEntity.originalTitle,
+            overview = movieEntity.overview,
+            popularity = movieEntity.popularity,
+            posterPath = movieEntity.posterPath,
+            releaseDate = movieEntity.releaseDate,
+            title = movieEntity.title,
+            video = movieEntity.video,
+            voteAverage = movieEntity.voteAverage,
+            voteCount = movieEntity.voteCount,
+            isFavorite = movieEntity.isFavorite
         )
     }
 }

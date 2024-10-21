@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":features:movieDetail"))
     implementation(project(":features:settings"))
     implementation(project(":features:info"))
+    implementation(project(":features:favorites"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

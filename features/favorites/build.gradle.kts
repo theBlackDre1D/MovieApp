@@ -1,14 +1,14 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlinx.serialozation)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "co.init.movielist"
+    namespace = "co.init.favorites"
     compileSdk = 34
 
     defaultConfig {
@@ -28,21 +28,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
+        jvmTarget = "11"
     }
 }
 
 dependencies {
 
     implementation(project(":core"))
-    implementation(project(":network"))
     implementation(project(":database"))
     implementation(project(":features:movieDetail"))
 
@@ -58,6 +54,10 @@ dependencies {
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.ui)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+
+    // Coil
+    implementation(libs.coil.compose)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -69,17 +69,10 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
 
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-
     // Paging 3
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
-
-    // Coil
-    implementation(libs.coil.compose)
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
