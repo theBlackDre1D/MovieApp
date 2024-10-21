@@ -3,7 +3,7 @@ package co.init.moviedetail.ui
 import androidx.lifecycle.ViewModel
 import co.init.core.data.Movie
 import co.init.core.extensions.doInIOCoroutine
-import co.init.moviedetail.domain.ToggleMovieFavoriteStatusUseCase
+import co.init.shared.ToggleMovieFavoriteStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

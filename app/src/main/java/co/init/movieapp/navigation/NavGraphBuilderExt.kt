@@ -21,9 +21,7 @@ fun NavGraphBuilder.addMovieListNavGraph(navController: NavController) {
             )
         }
 
-        composable<Movie> { backstackEntry ->
-            MovieDetailScreen(backstackEntry.toRoute())
-        }
+        movieDetail()
     }
 }
 
@@ -35,8 +33,12 @@ fun NavGraphBuilder.addFavoritesNavGraph(navController: NavController) {
             )
         }
 
-        composable<Movie> { backstackEntry ->
-            MovieDetailScreen(backstackEntry.toRoute())
-        }
+        movieDetail()
+    }
+}
+
+private fun NavGraphBuilder.movieDetail() {
+    composable<Movie> { backstackEntry ->
+        MovieDetailScreen(backstackEntry.toRoute())
     }
 }
