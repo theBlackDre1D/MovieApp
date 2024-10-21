@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import co.init.core.navigation.HomeNavigation
 import co.init.info.InfoScreen
 import co.init.movieapp.components.MovieAppBottomNavigationBar
 import co.init.movieapp.components.TopBar
+import co.init.movieapp.navigation.HomeNavigation
 import co.init.movieapp.navigation.addFavoritesNavGraph
 import co.init.movieapp.navigation.addMovieListNavGraph
 import co.init.movieapp.ui.theme.MovieAppTheme

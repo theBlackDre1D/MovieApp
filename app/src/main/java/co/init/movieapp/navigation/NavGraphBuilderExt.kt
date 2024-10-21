@@ -6,7 +6,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import co.init.core.data.Movie
-import co.init.core.navigation.HomeNavigation
 import co.init.favorites.navigation.FavoriteListNavigation
 import co.init.favorites.ui.FavoritesScreen
 import co.init.moviedetail.ui.MovieDetailScreen
