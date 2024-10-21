@@ -44,7 +44,6 @@ dependencies {
     implementation(project(":database"))
     implementation(project(":preferences"))
     implementation(project(":base"))
-    implementation(project(":shared"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

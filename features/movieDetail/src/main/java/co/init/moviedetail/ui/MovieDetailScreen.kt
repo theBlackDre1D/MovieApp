@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import co.init.core.R
 import co.init.core.data.Movie
-import co.init.moviedetail.R
 import coil.compose.AsyncImage
 
 @Composable

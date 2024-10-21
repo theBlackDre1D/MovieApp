@@ -6,7 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import co.init.core.data.Movie
-import co.init.favorites.components.MovieListItem
+import co.init.favorites.ui.components.MovieListItem
 
 @Composable
 fun FavoritesScreen(openMovieDetail: (Movie) -> Unit) {

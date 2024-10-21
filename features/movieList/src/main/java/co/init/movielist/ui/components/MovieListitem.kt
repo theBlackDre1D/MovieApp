@@ -20,8 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import co.init.core.R
 import co.init.core.data.Movie
-import co.init.movielist.R
 import coil.compose.AsyncImage
 
 @Composable

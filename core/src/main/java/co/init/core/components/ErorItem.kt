@@ -1,4 +1,4 @@
-package co.init.movielist.ui.components
+package co.init.core.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import co.init.movielist.R
+import co.init.core.R
 
 @Composable
 fun ErrorItem(message: String, onRetry: () -> Unit) {

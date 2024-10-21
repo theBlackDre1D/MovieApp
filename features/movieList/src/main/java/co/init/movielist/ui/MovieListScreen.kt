@@ -19,10 +19,10 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
+import co.init.core.R
+import co.init.core.components.ErrorItem
+import co.init.core.components.LoadingItem
 import co.init.core.data.Movie
-import co.init.movielist.R
-import co.init.movielist.ui.components.ErrorItem
-import co.init.movielist.ui.components.LoadingItem
 import co.init.movielist.ui.components.MovieListItem
 
 @Composable

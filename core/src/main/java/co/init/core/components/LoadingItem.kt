@@ -1,4 +1,4 @@
-package co.init.movielist.ui.components
+package co.init.core.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
