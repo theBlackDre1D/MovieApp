@@ -4,7 +4,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import co.init.core.data.Movie
-import co.init.database.data.EntityMapper
 import co.init.database.domain.MovieLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -23,7 +22,4 @@ class MovieListRepository @Inject constructor(
             pagingSourceFactory = { MoviesMediator(movieRemoteDataSource, movieLocalDataSource) }
         ).flow
     }
-
-    fun toggleMovieFavoriteStatus(currentFavoriteStatus: Boolean, movie: Movie) =
-        movieLocalDataSource.toggleMovieFavoriteStatus(currentFavoriteStatus, EntityMapper.toMovieEntity(movie))
 }
