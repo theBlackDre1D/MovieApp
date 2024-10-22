@@ -6,6 +6,5 @@ import java.io.Serializable
 
 data class TopBarConfiguration(
     @StringRes val title: Int = R.string.app_name,
-    val showBackButton: Boolean = false,
-    val isConnectedToNetwork: Boolean = true
+    val showBackButton: Boolean = false
 ) : Serializable

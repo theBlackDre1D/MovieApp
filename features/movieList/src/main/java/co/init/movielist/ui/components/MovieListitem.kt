@@ -15,13 +15,18 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.init.core.R
 import co.init.core.data.Movie
+import co.init.core.extensions.safe
 import coil.compose.AsyncImage
 
 @Composable
@@ -29,12 +34,23 @@ fun MovieListItem(
     movie: Movie,
     onMovieClick: (Movie) -> Unit
 ) {
+    val viewModel: MovieListItemVM = hiltViewModel()
+
+    LaunchedEffect(viewModel) {
+        viewModel.handleIntent(MovieListItemVM.Intent.SetMovie(movie))
+    }
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .clickable { onMovieClick(movie) },
+            .clickable {
+                state.movie?.let {
+                    onMovieClick(it)
+                }
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
@@ -46,7 +62,7 @@ fun MovieListItem(
 
             // Icon
             AsyncImage(
-                model = movie.thumbnailUrl,
+                model = state.movie?.thumbnailUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .size(100.dp)
@@ -58,7 +74,7 @@ fun MovieListItem(
 
             // Movie title
             Text(
-                text = movie.title,
+                text = state.movie?.title.orEmpty(),
                 modifier = Modifier
                     .wrapContentWidth()
                     .weight(1f)
@@ -66,12 +82,13 @@ fun MovieListItem(
             )
 
             // Favorite
-            val imageResource = if (movie.isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite
+            val imageResource = if (state.movie?.isFavorite.safe()) R.drawable.ic_favorite else R.drawable.ic_not_favorite
             Image(
                 painter = painterResource(imageResource),
                 contentDescription = null,
                 modifier = Modifier
                     .size(40.dp)
+                    .clickable { viewModel.handleIntent(MovieListItemVM.Intent.LikeMove) }
             )
 
             Spacer(modifier = Modifier.width(16.dp))
