@@ -12,11 +12,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import co.init.core.R
+import co.init.core.data.TopBarConfiguration
 import co.init.settings.components.SwitchWithText
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    onTopBarConfiguration: (TopBarConfiguration) -> Unit
+) {
     val viewModel: SettingsScreenVM = hiltViewModel()
+
+    onTopBarConfiguration(
+        TopBarConfiguration(
+            title = R.string.bottom_navigation_settings
+        )
+    )
 
     Column(
         modifier = Modifier

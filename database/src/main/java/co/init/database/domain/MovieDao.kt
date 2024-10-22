@@ -13,7 +13,7 @@ import co.init.database.data.MovieEntity
 interface MovieDao {
 
     // Selects
-    @Query("SELECT * FROM $MOVIE_TABLE_NAME WHERE isFavorite = 1")
+    @Query("SELECT * FROM $MOVIE_TABLE_NAME WHERE isFavorite = 1 ORDER BY title ASC")
     fun getAllFavoriteMovies(): PagingSource<Int, MovieEntity>
 
     @Query("SELECT EXISTS(SELECT 1 FROM $MOVIE_TABLE_NAME WHERE id = :movieId AND isFavorite = 1)")

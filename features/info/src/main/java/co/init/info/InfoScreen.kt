@@ -14,9 +14,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import co.init.core.R
+import co.init.core.data.TopBarConfiguration
 
 @Composable
-fun InfoScreen() {
+fun InfoScreen(
+    onTopBarConfiguration: (TopBarConfiguration) -> Unit
+) {
+    onTopBarConfiguration(
+        TopBarConfiguration(
+            title = R.string.bottom_navigation_info
+        )
+    )
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

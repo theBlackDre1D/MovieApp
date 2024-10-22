@@ -12,16 +12,22 @@
     <string name="common_error_text">An error occurred</string>
     <string name="common_no_internet_connection">No internet connection...</string>
 
+    <!--  Screens name  -->
+    <string name="movie_detail_screen_name">Movie detail</string>
+    <string name="favorites_screen_name">Favorites</string>
+
     <!--  Movie detail  -->
     <string name="movie_detail_popularity">User rating: %1$s</string>
+
+    <!--  Settings  -->
+    <string name="settings_theme_use_system_default">Use system settings</string>
+    <string name="settings_theme_use_darkMode">Activate dark mode</string>
 
     <!--    Info   -->
     <string name="info_app_version">App version: %1$s</string>
     <string name="info_app_code">Code: %1$s</string>
-
     <string name="info_device_manufacturer">Manufacturer: %1$s</string>
     <string name="info_device_model">Model: %1$s</string>
     <string name="info_device_system_version">System version: %1$s (API level: %2$s)</string>
-
     <string name="info_app_developer">App developer: %1$s</string>
 </resources>

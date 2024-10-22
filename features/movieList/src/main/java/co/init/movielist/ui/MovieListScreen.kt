@@ -23,12 +23,14 @@ import co.init.core.R
 import co.init.core.components.ErrorItem
 import co.init.core.components.LoadingItem
 import co.init.core.data.Movie
+import co.init.core.data.TopBarConfiguration
 import co.init.movielist.ui.components.MovieListItem
 
 @Composable
 fun MovieListScreen(
     viewModel: MovieListVM = hiltViewModel(),
-    openMovieDetail: (Movie) -> Unit
+    openMovieDetail: (Movie) -> Unit,
+    onTopBarConfiguration: (TopBarConfiguration) -> Unit
 ) {
     val remoteMovies = viewModel.popularMovies.collectAsLazyPagingItems()
     val refreshMoviesState by remember { derivedStateOf { remoteMovies.loadState.refresh } }
@@ -46,6 +48,10 @@ fun MovieListScreen(
         }
     }
 
+    onTopBarConfiguration(
+        TopBarConfiguration(R.string.app_name)
+    )
+
     DisposableEffect(lifecycleOwner) {
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
@@ -61,6 +67,7 @@ fun MovieListScreen(
         ) {
             items(
                 count = remoteMovies.itemCount,
+//                key = remoteMovies.itemKey { it.id },
                 contentType = remoteMovies.itemContentType()
             ) { index ->
                 remoteMovies[index]?.let { movie ->

@@ -29,10 +29,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.init.core.R
 import co.init.core.data.Movie
+import co.init.core.data.TopBarConfiguration
 import coil.compose.AsyncImage
 
 @Composable
-fun MovieDetailScreen(movie: Movie) {
+fun MovieDetailScreen(
+    movie: Movie,
+    onActionBarConfiguration: (TopBarConfiguration) -> Unit
+) {
+    onActionBarConfiguration(
+        TopBarConfiguration(R.string.movie_detail_screen_name, true)
+    )
+
     if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
         MovieDetailScreenLandscape(movie)
     } else {

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="settings_theme_use_system_default">Use system settings</string>
-    <string name="settings_theme_use_darkMode">Activate dark mode</string>
-</resources>

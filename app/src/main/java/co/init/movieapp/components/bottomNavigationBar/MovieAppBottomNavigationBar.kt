@@ -1,4 +1,4 @@
-package co.init.movieapp.components
+package co.init.movieapp.components.bottomNavigationBar
 
 import androidx.compose.foundation.Image
 import androidx.compose.material3.NavigationBar
