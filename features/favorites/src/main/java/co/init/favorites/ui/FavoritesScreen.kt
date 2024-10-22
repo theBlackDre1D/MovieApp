@@ -13,9 +13,9 @@ import co.init.favorites.ui.components.MovieListItem
 @Composable
 fun FavoritesScreen(
     openMovieDetail: (Movie) -> Unit,
-    onActionBarConfiguration: (TopBarConfiguration) -> Unit
+    onTopBarConfiguration: (TopBarConfiguration) -> Unit
 ) {
-    onActionBarConfiguration(
+    onTopBarConfiguration(
         TopBarConfiguration(
             title = R.string.favorites_screen_name
         )

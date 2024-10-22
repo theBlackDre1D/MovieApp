@@ -37,7 +37,7 @@ fun NavGraphBuilder.addFavoritesNavGraph(
         composable<FavoriteListNavigation.FavoriteList> {
             FavoritesScreen(
                 openMovieDetail = { navController.navigate(it) },
-                onActionBarConfiguration = onTopBarConfiguration
+                onTopBarConfiguration = onTopBarConfiguration
             )
         }
 

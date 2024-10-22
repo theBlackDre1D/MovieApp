@@ -35,9 +35,9 @@ import coil.compose.AsyncImage
 @Composable
 fun MovieDetailScreen(
     movie: Movie,
-    onActionBarConfiguration: (TopBarConfiguration) -> Unit
+    onTopBarConfiguration: (TopBarConfiguration) -> Unit
 ) {
-    onActionBarConfiguration(
+    onTopBarConfiguration(
         TopBarConfiguration(R.string.movie_detail_screen_name, true)
     )
 
