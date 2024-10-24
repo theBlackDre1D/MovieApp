@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -65,14 +66,21 @@ fun MovieListItem(
                     .padding(horizontal = 16.dp),
             )
 
-            // Favorite
-            val imageResource = if (movie.isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite
-            Image(
-                painter = painterResource(imageResource),
-                contentDescription = null,
+            Column(
                 modifier = Modifier
-                    .size(40.dp)
-            )
+                    .fillMaxHeight()
+                    .padding(top = 8.dp),
+                horizontalAlignment = Alignment.Start,
+            ) {
+                // Favorite
+                val imageResource = if (movie.isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite
+                Image(
+                    painter = painterResource(imageResource),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.width(16.dp))
         }
