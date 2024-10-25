@@ -1,10 +1,13 @@
 package co.init.core
 
 import co.init.core.data.Movie
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.Serializable
 
 class MovieTest {
 
@@ -90,5 +93,35 @@ class MovieTest {
         // Then
         assertEquals(expectedThumbnailUrl, movie.thumbnailUrl)
         assertEquals(expectedImageUrl, movie.imageUrl)
+    }
+
+    @Test
+    fun `test if Movie has annotation Serializable`() {
+        // Given
+        val originalMovie = Movie(
+            id = 1,
+            adult = false,
+            originalLanguage = "en",
+            originalTitle = "Original Title",
+            overview = "This is an overview of the movie.",
+            popularity = 100.0,
+            posterPath = "/poster.jpg",
+            releaseDate = "2023-10-01",
+            title = "Movie Title",
+            video = false,
+            voteAverage = 8.5,
+            voteCount = 2000,
+            isFavorite = true
+        )
+
+        val serialized = Json.encodeToString(originalMovie)
+        val deserialized = Json.decodeFromString<Movie>(serialized)
+
+        assertEquals(originalMovie, deserialized)
+    }
+
+    @Test
+    fun `check if Movie implements Serializable interface`() {
+        assertTrue(Movie::class.java.interfaces.contains(Serializable::class.java))
     }
 }
