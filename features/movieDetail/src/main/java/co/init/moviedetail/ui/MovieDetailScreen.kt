@@ -29,10 +29,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.init.core.R
-import co.init.core.components.dialogs.Dialogs
 import co.init.core.data.Movie
 import co.init.core.data.TopBarConfiguration
 import co.init.core.extensions.safe
+import co.init.core.ui.SetupErrorHandling
 import coil.compose.AsyncImage
 
 @Composable
@@ -51,14 +51,10 @@ fun MovieDetailScreen(
         viewModel.handleIntent(MovieDetailScreenVM.Intent.LoadMovie(movie))
     }
 
+    SetupErrorHandling(viewModel)
+
     val onIntent: (MovieDetailScreenVM.Intent) -> Unit = { intent ->
         viewModel.handleIntent(intent)
-    }
-
-    state.errorMessage?.let { error ->
-        Dialogs.ShowErrorDialog(error) {
-            viewModel.handleIntent(MovieDetailScreenVM.Intent.ErrorHandled)
-        }
     }
 
     if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {

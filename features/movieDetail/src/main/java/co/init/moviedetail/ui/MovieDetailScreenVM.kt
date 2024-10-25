@@ -1,6 +1,6 @@
 package co.init.moviedetail.ui
 
-import androidx.lifecycle.ViewModel
+import co.init.core.base.BaseVM
 import co.init.core.data.Movie
 import co.init.core.extensions.doInIOCoroutine
 import co.init.database.domain.useCases.ToggleMovieFavoriteStatusUseCase
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailScreenVM @Inject constructor(
     private val toggleMovieFavoriteStatusUseCase: ToggleMovieFavoriteStatusUseCase
-) : ViewModel() {
+) : BaseVM() {
 
     private val _state: MutableStateFlow<State> by lazy { MutableStateFlow(State()) }
     val state get() = _state.asStateFlow()
@@ -26,13 +26,11 @@ class MovieDetailScreenVM @Inject constructor(
     sealed class Intent {
         data class LoadMovie(val movie: Movie) : Intent()
         data object LikeMovie : Intent()
-        data object ErrorHandled : Intent()
     }
 
     fun handleIntent(intent: Intent) {
         when (intent) {
             Intent.LikeMovie -> onFavoriteIconClick()
-            Intent.ErrorHandled -> _state.update { it.copy(errorMessage = null) }
             is Intent.LoadMovie -> _state.update { it.copy(movie = intent.movie) }
         }
     }
@@ -47,9 +45,7 @@ class MovieDetailScreenVM @Inject constructor(
                             _state.update { it.copy(movie = newMovie) }
                         },
                         onFailure = { throwable ->
-                            _state.update {
-                                it.copy(errorMessage = throwable.message)
-                            }
+                            _error.emit(throwable.message)
                         }
                     )
                 }
