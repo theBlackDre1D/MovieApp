@@ -13,9 +13,9 @@ import androidx.paging.compose.itemContentType
 import co.init.core.R
 import co.init.core.components.ErrorItem
 import co.init.core.components.LoadingItem
+import co.init.core.components.movieListItem.MovieListItem
 import co.init.core.data.Movie
 import co.init.core.data.TopBarConfiguration
-import co.init.favorites.ui.components.MovieListItem
 
 @Composable
 fun FavoritesScreen(

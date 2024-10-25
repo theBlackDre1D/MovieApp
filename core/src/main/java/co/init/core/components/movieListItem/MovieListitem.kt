@@ -1,4 +1,4 @@
-package co.init.movielist.ui.components
+package co.init.core.components.movieListItem
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
