@@ -1,4 +1,4 @@
-package co.init.core.components
+package co.init.core.components.loadingItem
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

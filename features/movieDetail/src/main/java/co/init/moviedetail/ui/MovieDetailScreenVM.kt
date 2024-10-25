@@ -6,7 +6,7 @@ import co.init.core.extensions.doInIOCoroutine
 import co.init.database.domain.useCases.ToggleMovieFavoriteStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -15,16 +15,43 @@ class MovieDetailScreenVM @Inject constructor(
     private val toggleMovieFavoriteStatusUseCase: ToggleMovieFavoriteStatusUseCase
 ) : ViewModel() {
 
-    lateinit var currentMovie: Movie
+    private val _state: MutableStateFlow<State> by lazy { MutableStateFlow(State()) }
+    val state get() = _state.asStateFlow()
 
-    private val _isFavoriteFlow: MutableStateFlow<Boolean> by lazy { MutableStateFlow(currentMovie.isFavorite) }
-    val isFavoriteFlow: StateFlow<Boolean> get() = _isFavoriteFlow
+    data class State(
+        val movie: Movie? = null,
+        val errorMessage: String? = null
+    )
 
-    fun onFavoriteIconClick(currentFavoriteState: Boolean, movie: Movie) {
-        doInIOCoroutine {
-            toggleMovieFavoriteStatusUseCase(currentFavoriteState, movie).collect { result ->
-                result.onSuccess {
-                    _isFavoriteFlow.update { !currentFavoriteState }
+    sealed class Intent {
+        data class LoadMovie(val movie: Movie) : Intent()
+        data object LikeMovie : Intent()
+        data object ErrorHandled : Intent()
+    }
+
+    fun handleIntent(intent: Intent) {
+        when (intent) {
+            Intent.LikeMovie -> onFavoriteIconClick()
+            Intent.ErrorHandled -> _state.update { it.copy(errorMessage = null) }
+            is Intent.LoadMovie -> _state.update { it.copy(movie = intent.movie) }
+        }
+    }
+
+    private fun onFavoriteIconClick() {
+        _state.value.movie?.let { movie ->
+            doInIOCoroutine {
+                toggleMovieFavoriteStatusUseCase(movie.isFavorite, movie).collect { result ->
+                    result.fold(
+                        onSuccess = {
+                            val newMovie = movie.copy(isFavorite = !movie.isFavorite)
+                            _state.update { it.copy(movie = newMovie) }
+                        },
+                        onFailure = { throwable ->
+                            _state.update {
+                                it.copy(errorMessage = throwable.message)
+                            }
+                        }
+                    )
                 }
             }
         }

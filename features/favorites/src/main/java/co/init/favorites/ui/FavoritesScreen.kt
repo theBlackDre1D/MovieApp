@@ -11,8 +11,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import co.init.core.R
-import co.init.core.components.ErrorItem
-import co.init.core.components.LoadingItem
+import co.init.core.components.errorItem.ErrorItem
+import co.init.core.components.loadingItem.LoadingItem
 import co.init.core.components.movieListItem.MovieListItem
 import co.init.core.data.Movie
 import co.init.core.data.TopBarConfiguration

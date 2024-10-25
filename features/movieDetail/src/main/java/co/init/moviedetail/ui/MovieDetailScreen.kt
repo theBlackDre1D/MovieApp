@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,8 +29,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.init.core.R
+import co.init.core.components.dialogs.Dialogs
 import co.init.core.data.Movie
 import co.init.core.data.TopBarConfiguration
+import co.init.core.extensions.safe
 import coil.compose.AsyncImage
 
 @Composable
@@ -41,19 +44,35 @@ fun MovieDetailScreen(
         TopBarConfiguration(R.string.movie_detail_screen_name, true)
     )
 
+    val viewModel: MovieDetailScreenVM = hiltViewModel()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.handleIntent(MovieDetailScreenVM.Intent.LoadMovie(movie))
+    }
+
+    val onIntent: (MovieDetailScreenVM.Intent) -> Unit = { intent ->
+        viewModel.handleIntent(intent)
+    }
+
+    state.errorMessage?.let { error ->
+        Dialogs.ShowErrorDialog(error) {
+            viewModel.handleIntent(MovieDetailScreenVM.Intent.ErrorHandled)
+        }
+    }
+
     if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        MovieDetailScreenLandscape(movie)
+        MovieDetailScreenLandscape(state, onIntent)
     } else {
-        MovieDetailScreenPortrait(movie)
+        MovieDetailScreenPortrait(state, onIntent)
     }
 }
 
 @Composable
-private fun MovieDetailScreenPortrait(movie: Movie) {
-    val viewModel: MovieDetailScreenVM = hiltViewModel()
-    viewModel.currentMovie = movie
-
-    val isFavorite by viewModel.isFavoriteFlow.collectAsStateWithLifecycle(initialValue = movie.isFavorite)
+private fun MovieDetailScreenPortrait(
+    state: MovieDetailScreenVM.State,
+    sendIntent: (MovieDetailScreenVM.Intent) -> Unit)
+{
     val scrollState = rememberScrollState()
 
     Column(
@@ -66,7 +85,7 @@ private fun MovieDetailScreenPortrait(movie: Movie) {
 
         // Icon
         AsyncImage(
-            model = movie.imageUrl,
+            model = state.movie?.imageUrl,
             contentDescription = null,
             modifier = Modifier
                 .height(200.dp)
@@ -81,19 +100,19 @@ private fun MovieDetailScreenPortrait(movie: Movie) {
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .weight(1f),
-                text = movie.title,
+                text = state.movie?.title.orEmpty(),
                 fontSize = 24.sp
             )
 
             // Favorite
-            val imageResource = if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite
+            val imageResource = if (state.movie?.isFavorite.safe()) R.drawable.ic_favorite else R.drawable.ic_not_favorite
             Image(
                 painter = painterResource(imageResource),
                 contentDescription = null,
                 modifier = Modifier
                     .size(60.dp)
                     .padding(top = 16.dp)
-                    .clickable { viewModel.onFavoriteIconClick(isFavorite, movie) }
+                    .clickable { sendIntent(MovieDetailScreenVM.Intent.LikeMovie) }
             )
         }
 
@@ -102,7 +121,7 @@ private fun MovieDetailScreenPortrait(movie: Movie) {
         Text(
             modifier = Modifier
                 .fillMaxWidth(),
-            text = stringResource(R.string.movie_detail_popularity, movie.voteAverage.toString()),
+            text = stringResource(R.string.movie_detail_popularity, state.movie?.voteAverage.toString()),
             fontSize = 16.sp
         )
 
@@ -111,18 +130,17 @@ private fun MovieDetailScreenPortrait(movie: Movie) {
         Text(
             modifier = Modifier
                 .fillMaxWidth(),
-            text = movie.overview,
+            text = state.movie?.overview.orEmpty(),
             fontSize = 16.sp
         )
     }
 }
 
 @Composable
-private fun MovieDetailScreenLandscape(movie: Movie) {
-    val viewModel: MovieDetailScreenVM = hiltViewModel()
-    viewModel.currentMovie = movie
-
-    val isFavorite by viewModel.isFavoriteFlow.collectAsStateWithLifecycle(initialValue = movie.isFavorite)
+private fun MovieDetailScreenLandscape(
+    state: MovieDetailScreenVM.State,
+    sendIntent: (MovieDetailScreenVM.Intent) -> Unit
+) {
     val scrollState = rememberScrollState()
 
     Row(
@@ -134,7 +152,7 @@ private fun MovieDetailScreenLandscape(movie: Movie) {
 
         // Icon
         AsyncImage(
-            model = movie.imageUrl,
+            model = state.movie?.imageUrl,
             contentDescription = null,
             modifier = Modifier
                 .size(400.dp)
@@ -158,19 +176,21 @@ private fun MovieDetailScreenLandscape(movie: Movie) {
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .weight(1f),
-                    text = movie.title,
+                    text = state.movie?.title.orEmpty(),
                     fontSize = 24.sp
                 )
 
                 // Favorite
-                val imageResource = if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_not_favorite
+                val imageResource = if (state.movie?.isFavorite.safe()) R.drawable.ic_favorite else R.drawable.ic_not_favorite
                 Image(
                     painter = painterResource(imageResource),
                     contentDescription = null,
                     modifier = Modifier
                         .size(60.dp)
                         .padding(top = 16.dp)
-                        .clickable { viewModel.onFavoriteIconClick(isFavorite, movie) }
+                        .clickable {
+                            sendIntent(MovieDetailScreenVM.Intent.LikeMovie)
+                        }
                 )
             }
 
@@ -179,7 +199,7 @@ private fun MovieDetailScreenLandscape(movie: Movie) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = stringResource(R.string.movie_detail_popularity, movie.voteAverage.toString()),
+                text = stringResource(R.string.movie_detail_popularity, state.movie?.voteAverage.toString()),
                 fontSize = 16.sp
             )
 
@@ -188,7 +208,7 @@ private fun MovieDetailScreenLandscape(movie: Movie) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = movie.overview,
+                text = state.movie?.overview.orEmpty(),
                 fontSize = 16.sp
             )
         }
