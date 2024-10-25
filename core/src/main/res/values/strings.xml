@@ -11,6 +11,9 @@
     <string name="common_retry">Retry</string>
     <string name="common_error_text">An error occurred</string>
     <string name="common_no_internet_connection">No internet connection...</string>
+    <string name="common_ok">Ok</string>
+    <string name="common_error">Error</string>
+    <string name="common_information">Information</string>
 
     <!--  Screens name  -->
     <string name="movie_detail_screen_name">Movie detail</string>
