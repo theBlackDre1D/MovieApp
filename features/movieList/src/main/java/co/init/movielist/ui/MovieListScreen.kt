@@ -28,7 +28,7 @@ import co.init.core.data.TopBarConfiguration
 
 @Composable
 fun MovieListScreen(
-    viewModel: MovieListVM = hiltViewModel(),
+    viewModel: MovieListScreenVM = hiltViewModel(),
     openMovieDetail: (Movie) -> Unit,
     onTopBarConfiguration: (TopBarConfiguration) -> Unit
 ) {
