@@ -45,7 +45,6 @@ android {
 dependencies {
 
     implementation(project(":core"))
-    implementation(project(":base"))
     implementation(project(":preferences"))
     implementation(project(":features:movieList"))
     implementation(project(":features:movieDetail"))

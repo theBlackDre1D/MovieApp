@@ -1,4 +1,4 @@
-package co.init.base
+package co.init.core.base
 
 import androidx.lifecycle.ViewModel
 import co.init.preferences.PreferencesManager

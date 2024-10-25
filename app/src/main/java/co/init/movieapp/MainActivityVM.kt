@@ -1,6 +1,6 @@
 package co.init.movieapp
 
-import co.init.base.BaseActivityVM
+import co.init.core.base.BaseActivityVM
 import co.init.movieapp.connectivityManager.ConnectivityObserver
 import co.init.preferences.PreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -25,7 +25,6 @@ include(":core")
 include(":network")
 include(":database")
 include(":preferences")
-include(":base")
 
 // Features
 include(":features:settings")
