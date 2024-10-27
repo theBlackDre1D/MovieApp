@@ -39,15 +39,10 @@ class MovieDetailScreenVM @Inject constructor(
         _state.value.movie?.let { movie ->
             doInIOCoroutine {
                 toggleMovieFavoriteStatusUseCase(movie).collect { result ->
-                    result.fold(
-                        onSuccess = {
-                            val newMovie = movie.copy(isFavorite = !movie.isFavorite)
-                            _state.update { it.copy(movie = newMovie) }
-                        },
-                        onFailure = { throwable ->
-                            _error.emit(throwable.message)
-                        }
-                    )
+                    wrapResult(result) {
+                        val newMovie = movie.copy(isFavorite = !movie.isFavorite)
+                        _state.update { it.copy(movie = newMovie) }
+                    }
                 }
             }
         }
