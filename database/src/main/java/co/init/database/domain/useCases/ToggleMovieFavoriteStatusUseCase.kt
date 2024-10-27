@@ -9,9 +9,6 @@ class ToggleMovieFavoriteStatusUseCase @Inject constructor(
     private val movieLocalDataSource: MovieLocalDataSource
 ) {
 
-    operator fun invoke(currentFavoriteStatus: Boolean, movie: Movie) =
-        movieLocalDataSource.toggleMovieFavoriteStatus(
-            currentFavoriteStatus,
-            EntityMapper.toMovieEntity(movie)
-        )
+    operator fun invoke(movie: Movie) =
+        movieLocalDataSource.toggleMovieFavoriteStatus(EntityMapper.toMovieEntity(movie))
 }

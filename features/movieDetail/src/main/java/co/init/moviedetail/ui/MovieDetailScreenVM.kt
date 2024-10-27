@@ -38,7 +38,7 @@ class MovieDetailScreenVM @Inject constructor(
     private fun onFavoriteIconClick() {
         _state.value.movie?.let { movie ->
             doInIOCoroutine {
-                toggleMovieFavoriteStatusUseCase(movie.isFavorite, movie).collect { result ->
+                toggleMovieFavoriteStatusUseCase(movie).collect { result ->
                     result.fold(
                         onSuccess = {
                             val newMovie = movie.copy(isFavorite = !movie.isFavorite)

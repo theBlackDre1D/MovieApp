@@ -3,7 +3,6 @@ package co.init.database
 import co.init.core.data.Movie
 import co.init.database.domain.MovieLocalDataSource
 import co.init.database.domain.useCases.ToggleMovieFavoriteStatusUseCase
-import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
@@ -36,8 +35,6 @@ class ToggleMovieFavoriteStatusUseCaseTest {
 
     @Before
     fun setup() {
-        MockKAnnotations.init(this)
-
         movieLocalDataSource = mockk(relaxed = true)
         toggleMovieFavoriteStatusUseCase = ToggleMovieFavoriteStatusUseCase(movieLocalDataSource)
     }
@@ -46,9 +43,9 @@ class ToggleMovieFavoriteStatusUseCaseTest {
     fun `test if use case emits value as should`() = runTest {
         val expectedFlow = flowOf(Result.success(Unit))
 
-        coEvery { toggleMovieFavoriteStatusUseCase(true, movie) } returns expectedFlow
+        coEvery { toggleMovieFavoriteStatusUseCase(movie) } returns expectedFlow
 
-        val result = toggleMovieFavoriteStatusUseCase(true, movie).toList()
+        val result = toggleMovieFavoriteStatusUseCase(movie).toList()
         assertEquals(expectedFlow.toList(), result)
     }
 }

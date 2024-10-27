@@ -48,6 +48,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.mockk)
+    testImplementation(libs.androidx.paging.testing)
 
     // Hilt
     implementation(libs.hilt.android)

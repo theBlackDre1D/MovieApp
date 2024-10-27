@@ -25,8 +25,8 @@ class MovieLocalDataSource @Inject constructor(
         listOf()
     }
 
-    fun toggleMovieFavoriteStatus(currentFavoriteStatus: Boolean, movieEntity: MovieEntity) = flow {
-        if (currentFavoriteStatus) {
+    fun toggleMovieFavoriteStatus(movieEntity: MovieEntity) = flow {
+        if (movieEntity.isFavorite) {
             emit(Result.success(movieDao.deleteMovie(movieEntity)))
         } else {
             emit(Result.success(movieDao.saveMovie(movieEntity.copy(isFavorite = true))))

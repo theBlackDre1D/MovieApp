@@ -9,6 +9,6 @@ class MovieDetailRepository @Inject constructor(
     private val localDataSource: MovieLocalDataSource
 ) {
 
-    fun toggleMovieFavoriteStatus(currentFavoriteStatus: Boolean, movie: Movie) =
-        localDataSource.toggleMovieFavoriteStatus(currentFavoriteStatus, EntityMapper.toMovieEntity(movie))
+    fun toggleMovieFavoriteStatus(movie: Movie) =
+        localDataSource.toggleMovieFavoriteStatus(EntityMapper.toMovieEntity(movie))
 }
