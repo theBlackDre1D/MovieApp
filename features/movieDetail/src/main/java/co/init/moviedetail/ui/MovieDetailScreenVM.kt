@@ -31,7 +31,11 @@ class MovieDetailScreenVM @Inject constructor(
     fun handleIntent(intent: Intent) {
         when (intent) {
             Intent.LikeMovie -> onFavoriteIconClick()
-            is Intent.LoadMovie -> _state.update { it.copy(movie = intent.movie) }
+            is Intent.LoadMovie -> {
+                if (_state.value.movie == null) {
+                    _state.update { it.copy(movie = intent.movie) }
+                }
+            }
         }
     }
 
