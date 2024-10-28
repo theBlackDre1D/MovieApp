@@ -8,14 +8,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import co.init.core.base.BaseVM
 import co.init.core.components.dialogs.Dialogs
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SetupErrorHandling(viewModel: BaseVM) {
     var errorMessage by rememberSaveable { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
-        viewModel.error.collectLatest { error ->
+        viewModel.error.collect { error ->
             errorMessage = error
         }
     }
