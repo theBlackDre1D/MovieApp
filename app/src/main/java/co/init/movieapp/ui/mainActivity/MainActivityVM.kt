@@ -1,4 +1,4 @@
-package co.init.movieapp
+package co.init.movieapp.ui.mainActivity
 
 import co.init.core.base.BaseActivityVM
 import co.init.movieapp.connectivityManager.ConnectivityObserver

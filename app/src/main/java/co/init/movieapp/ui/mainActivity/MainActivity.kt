@@ -1,4 +1,4 @@
-package co.init.movieapp
+package co.init.movieapp.ui.mainActivity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

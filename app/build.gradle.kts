@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "co.init.movieapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "co.init.movieapp"
